@@ -10,21 +10,20 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-unsigned int	ft_strlen(char	*s)
-{
-	unsigned int	i;
+#include "libft.h"
 
-	i = 0;
-	while (s[i] != '\0')
-		i++;
-	return (i);
-}
+size_t	ft_strlen(const char *s);
 
-unsigned int	ft_strlcat(char *dest, char *src, unsigned int size)
+// Appends src to the end of dest, making sure not to write more than size - 1 
+// characters in total (including the original content of dest), 
+// and always null-terminates the result if size > 0.
+// Return: The total length of the string it tried to create:
+//   strlen(dest_original) + strlen(src)
+size_t	ft_strlcat(char *dest, const char *src, size_t size)
 {
-	unsigned int	i;
-	unsigned int	d_len;
-	unsigned int	s_len;
+	size_t	i;
+	size_t	d_len;
+	size_t	s_len;
 
 	d_len = ft_strlen(dest);
 	s_len = ft_strlen(src);

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
+#include "libft.h"
 
 void	handle_negative(long *nb)
 {
@@ -22,8 +22,10 @@ void	print_positive_nb(long nb)
 {
 	int		i;
 	char	s[99];
+	int		count;
 
 	i = 0;
+	count = 0;
 	while (nb > 0)
 	{
 		s[i] = (nb % 10) + '0';
@@ -31,26 +33,34 @@ void	print_positive_nb(long nb)
 		i++;
 	}
 	i--;
+	count = i;
 	while (i >= 0)
 	{
 		write(1, &s[i], 1);
 		i--;
 	}
+	TODO: Check what is the count for;
+	return (count);
 }
 
-void	ft_putnbr(int nb)
+int	ft_putnbr(int nb)
 {
 	long	lnb;
+	int		count;
 
 	lnb = nb;
+	count = 0;
 	if (lnb == 0)
 	{
 		write(1, "0", 1);
 		return ;
 	}
 	if (lnb < 0)
+	{
 		handle_negative(&lnb);
-	print_positive_nb(lnb);
+		count++;
+	}
+	count += print_positive_nb(lnb);
 }
 
 /*

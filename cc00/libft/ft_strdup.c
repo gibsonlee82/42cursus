@@ -10,23 +10,17 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
+#include "libft.h"
 
-int	ft_strlen(char *str)
-{
-	int	i;
+size_t	ft_strlen(const char *s);
 
-	i = 0;
-	while (str[i] != '\0')
-		i++;
-	return (i);
-}
-
+// Create a duplicate of a given string by allocating memory for it 
+// and copy the contents of the string into the newly allocated memory.
 char	*ft_strdup(char *src)
 {
 	char	*dest;
-	int		len;
-	int		i;
+	size_t		len;
+	size_t		i;
 
 	len = ft_strlen(src);
 	dest = (char *) malloc(sizeof(char) + (len + 1));

@@ -10,28 +10,25 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-//#include <stdio.h>
-int	ft_str_is_alpha(char *str)
+#include "libft.h"
+
+int	ft_isalpha(int c)
 {
-	while (*str != '\0')
-	{
-		if (!((*str >= 'a' && *str <= 'z') || (*str >= 'A' && *str <= 'Z')))
-		{
-			return (0);
-		}
-		str++;
-	}
-	return (1);
+
+	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))
+		return (1);
+	return (0);
 }
 
 /*
+#include <stdio.h>
 void	main(void)
 {
-	char *a = "Hello";
-	char *b = "Hello\n";
-	char *c = "I am";
-	printf("%s: %i\n", a, ft_str_is_alpha(a));
-	printf("%s: %i\n", b, ft_str_is_alpha(b));
-	printf("%s: %i\n", c, ft_str_is_alpha(c));
+	char a = 'a';
+	char b = '1';
+	char c = 'c';
+	printf("%c: %i\n", a, ft_isalpha(a));
+	printf("%c: %i\n", b, ft_isalpha(b));
+	printf("%c: %i\n", c, ft_isalpha(c));
 }
 */

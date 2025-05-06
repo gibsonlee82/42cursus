@@ -10,9 +10,14 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-unsigned int	ft_strlcpy(char *dest, char *src, unsigned int size)
+#include "libft.h"
+
+// Safer alternative to strcpy and strncpy for copying C strings.
+// Designed to prevent buffer overflows by always null-terminating the result.
+// Return: total length of the source string (strlen(src)).
+size_t	ft_strlcpy(char *dest, const char *src, size_t size)
 {
-	unsigned int	i;
+	size_t	i;
 
 	i = 0;
 	while (src[i] != '\0' && i < size - 1)

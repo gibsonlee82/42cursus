@@ -10,32 +10,12 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-//#include <stdio.h>
-char	*ft_tolower(char *str)
-{
-	int	i;
+#include "libft.h"
 
-	i = 0;
-	while (str[i] != '\0')
-	{
-		if (str[i] >= 'A' && str[i] <= 'Z')
-		{
-			str[i] = str[i] - 'A' + 'a';
-		}
-		i++;
-	}
-	return (str);
+int	ft_tolower(int c)
+{
+	if (c >= 'A' && c <= 'Z')
+		c = c - 'A' + 'a';
+	return (c);
 }
 
-/*
-void	main(void)
-{
-	char	a[] = "How are you";
-	char	b[] = "Hwer8 sadf09";
-	char	c[] = "87778  97\n";
-
-	printf("%s: %s", a, ft_tolower(a));
-	printf("%s: %s", b, ft_tolower(b));
-	printf("%s: %s", c, ft_tolower(c));
-}
-*/

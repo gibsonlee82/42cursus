@@ -10,28 +10,31 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_atoi(char *s)
+#include "libft.h"
+
+// Convert a string (ASCII representation of an integer) into an int
+int	ft_atoi(cont char *s)
 {
 	int	num;
 	int	sign;
+	int	i;
 
 	num = 0;
-	while (*s == ' ' || *s == '\t' || *s == '\n' \
-		|| *s == '\v' || *s == '\f' || *s == '\r')
-		s++;
+	i = 0;
+	while (s[i] == ' ' || s[i] == '\t' || s[i] == '\n' \
+		|| s[i] == '\v' || s[i] == '\f' || s[i] == '\r')
+		i++;
 	sign = 1;
-	while (*s == '-' || *s == '+')
+	while (s[i] == '-' || s[i] == '+')
 	{
-		if (*s == '-')
-		{
+		if (s[i] == '-')
 			sign *= -1;
-		}
-		s++;
+		i++;
 	}
-	while (*s >= '0' && *s <= '9')
+	while (s[i] >= '0' && s[i] <= '9')
 	{
-		num = (num * 10) + (*s - '0');
-		s++;
+		num = (num * 10) + (s[i] - '0');
+		i++;
 	}
 	return (num * sign);
 }
