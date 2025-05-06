@@ -10,21 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
 #include <stdlib.h>
 
-// string len
-int	sl(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i] != '\0')
-		i++;
-	return (i);
-}
-
 // copy n char of string
-char	*gl_strncpy(char *src, unsigned int n)
+char	*ft_strdupword(const char *src, unsigned int n)
 {
 	unsigned int	i;
 	char			*dest;
@@ -35,28 +25,16 @@ char	*gl_strncpy(char *src, unsigned int n)
 	i = 0;
 	while (src[i] != '\0' && i < n)
 	{
-		dest[i] = src[i];
+		dest[i] = (char) src[i];
 		i++;
 	}
 	dest[i] = '\0';
 	return (dest);
 }
 
-// check if char is in charset
-int	is_in_set(char c, char *charset)
+char	**ft_split_redirect(char **result, const char *str, char c)
 {
-	while (*charset != '\0')
-	{
-		if (c == *charset)
-			return (1);
-		charset++;
-	}
-	return (0);
-}
-
-char	**ft_split_redirect(char **result, char *str, char *charset)
-{
-	char	*c_str;
+	const char	*c_str;
 	int		len;
 	int		num_string;
 
@@ -65,10 +43,10 @@ char	**ft_split_redirect(char **result, char *str, char *charset)
 	len = 0;
 	while (*str != '\0')
 	{
-		if (is_in_set(*str, charset))
+		if (*str == c)
 		{
 			if (len > 0)
-				result[num_string++] = gl_strncpy(c_str, len);
+				result[num_string++] = ft_strdupword(c_str, len);
 			len = 0;
 			c_str = str + 1;
 		}
@@ -77,25 +55,26 @@ char	**ft_split_redirect(char **result, char *str, char *charset)
 		str++;
 	}
 	if (len > 0)
-		result[num_string] = gl_strncpy(c_str, len);
+		result[num_string] = ft_strdupword(c_str, len);
 	result[num_string + 1] = NULL;
 	return (result);
 }
 
-char	**ft_split(char *str, char *charset)
+// Allocates memory (using malloc(3)) and returns an array of strings, 
+// obtained by splitting 's' using the character 'c' as a delimiter.
+char	**ft_split(char const *s, char c)
 {
 	char	**result;
 
 	result = malloc(sizeof(char *) * 9999);
 	if (result == NULL)
 		return (NULL);
-	result = ft_split_redirect(result, str, charset);
+	result = ft_split_redirect(result, s, c);
 	return (result);
 }
 
 /*
 #include <stdio.h>
-
 int	main(void)
 {
 	char	**result;
@@ -103,7 +82,7 @@ int	main(void)
 	int	i;
 
 	num_words = 0;
-	result = ft_split("hello, how are you? I am fine.", "?, ");
+	result = ft_split("hello, how are you? I am fine.", ' ');
 	//num_words = count_words("hello, how are you? I am fine.", ",? ");
 	//printf("number of words = %d\n", num_words);
 	i = 0;

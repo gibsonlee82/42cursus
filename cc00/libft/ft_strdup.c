@@ -16,7 +16,7 @@ size_t	ft_strlen(const char *s);
 
 // Create a duplicate of a given string by allocating memory for it 
 // and copy the contents of the string into the newly allocated memory.
-char	*ft_strdup(char *src)
+char	*ft_strdup(const char *src)
 {
 	char	*dest;
 	size_t		len;

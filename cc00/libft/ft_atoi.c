@@ -13,7 +13,7 @@
 #include "libft.h"
 
 // Convert a string (ASCII representation of an integer) into an int
-int	ft_atoi(cont char *s)
+int	ft_atoi(const char *s)
 {
 	int	num;
 	int	sign;
