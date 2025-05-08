@@ -15,16 +15,16 @@
 // Return a pointer to the last occurrence of the char c in the str s
 char	*ft_strrchr(const char *s, int c)
 {
-	int	i;
+	int		n;
 
-	i = (int)ft_strlen(s);
+	n = (int)ft_strlen(s);
 	if (!((unsigned char)c))
-		return ((char *)&s[i]);
-	while (i >= 0)
+		return ((char *)&s[n]);
+	while (n >= 0)
 	{
-		if (s[i] == (unsigned char)c)
-			return ((char *)&s[i]);
-		i--;
+		if (s[n] == (unsigned char)c)
+			return ((char *)&s[n]);
+		n--;
 	}
 	return (NULL);
 }
