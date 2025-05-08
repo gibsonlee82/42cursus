@@ -13,7 +13,7 @@
 #include "libft.h"
 
 // Return a pointer to the last occurrence of the char c in the str s
-char	*my_strrchr(const char *s, int c)
+char	*ft_strrchr(const char *s, int c)
 {
 	const char	*last;
 
