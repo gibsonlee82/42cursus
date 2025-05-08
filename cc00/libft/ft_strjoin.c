@@ -6,26 +6,26 @@
 /*   By: giblee <abc@abc.com>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 17:33:41 by giblee            #+#    #+#             */
-/*   Updated: 2025/03/06 18:31:49 by giblee           ###   ########.fr       */
+/*   Updated: 2025/05/07 11:53:38 by giblee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "libft.h"
 
 // Allocates memory (using malloc(3)) and returns a new string, 
 // which is the result of concatenating 's1' and 's2'.
-char *ft_strjoin(const char *s1, const char *s2) 
+char	*ft_strjoin(const char *s1, const char *s2)
 {
-	size_t i;
-    size_t j;
-	char *result;
+	size_t	i;
+	size_t	j;
+	char	*result;
 
 	if (!s1)
 		return (ft_strdup(s2));
 	if (!s2)
 		return (ft_strdup(s1));
-    result = (char *)malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
-    if (!result)
-        return (NULL);
+	result = (char *)malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
+	if (!result)
+		return (NULL);
 	i = 0;
 	while (s1[i])
 	{
@@ -36,19 +36,14 @@ char *ft_strjoin(const char *s1, const char *s2)
 	while (s2[j])
 		result[i++] = s2[j++];
 	result[i] = 0;
-    return (result);
+	return (result);
 }
 
 /*
 #include <stdio.h>
 int	main(void) 
 {
-	//char	*strs[] = {};
-	char	*strs[] = {"how", "are", "you", "?"};
-	int	size = 0;
-	char	*sep = ", "; // Separator
-
-	char	*result = ft_strjoin(size, strs, sep);
+	char	*result = ft_strjoin("how", " are you?");
 
 	if (result != NULL)
 	{

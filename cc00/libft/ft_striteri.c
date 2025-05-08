@@ -1,20 +1,32 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_striteri.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: giblee <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/07 12:19:09 by giblee            #+#    #+#             */
+/*   Updated: 2025/05/07 12:26:44 by giblee           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft.h"
 
 // Applies the function ’f’ to each character of the string passed as argument, 
 // passing its index as the first argument. Each character is passed by
 // address to 'f' so it can be modified if necessary.
-void    ft_striteri(char *s, void (*f)(unsigned int, char *))
+void	ft_striteri(char *s, void (*f)(unsigned int, char *))
 {
-    unsigned int i;
+	unsigned int	i;
 
-    if (!s || !f)
-        return ;
-    i = 0;
-    while (s[i]) 
-    {
-        f(i, &s[i]);
-        i++;
-    }
+	if (!s || !f)
+		return ;
+	i = 0;
+	while (s[i])
+	{
+		f(i, &s[i]);
+		i++;
+	}
 }
 
 /*
@@ -43,7 +55,7 @@ void    main(void)
 {
     char test1[] = "hello world";
     char test2[] = "abcd";
-    char test3[] = "lorem ipsum";
+    char test3[] = "hello world";
     char test4[] = "";
 
     // Test 1: to_upper
@@ -52,7 +64,8 @@ void    main(void)
 
     // Test 2: add_index
     ft_striteri(test2, add_index);
-    printf("Test 2 (add_index): %s\n", test2);  // Expected: 'a'+0, 'b'+1, 'c'+2, 'd'+3 → "aceg"
+    printf("Test 2 (add_index): %s\n", test2);  
+    // Expected: 'a'+0, 'b'+1, 'c'+2, 'd'+3 → "aceg"
 
     // Test 3: alt_case
     ft_striteri(test3, alt_case);

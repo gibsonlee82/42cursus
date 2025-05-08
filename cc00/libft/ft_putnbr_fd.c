@@ -1,22 +1,34 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: giblee <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/07 12:31:29 by giblee            #+#    #+#             */
+/*   Updated: 2025/05/07 12:33:53 by giblee           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft.h"
-#include "ft_putchar_fd.c"
+//#include "ft_putchar_fd.c"
 
 // Outputs the integer ’n’ to the specified file descriptor.
-void ft_putnbr_fd(int n, int fd)
+void	ft_putnbr_fd(int n, int fd)
 {
-    if (n == -2147483648)
-    {
-        write(fd, "-2147483648", 11);
-        return ;
-    }
-    if (n < 0)
-    {
-        ft_putchar_fd('-', fd);
-        n = -n;
-    }
-    if (n >= 10)
-        ft_putnbr_fd(n / 10, fd);
-    ft_putchar_fd((n % 10) + '0', fd);
+	if (n == -2147483648)
+	{
+		write(fd, "-2147483648", 11);
+		return ;
+	}
+	if (n < 0)
+	{
+		ft_putchar_fd('-', fd);
+		n = -n;
+	}
+	if (n >= 10)
+		ft_putnbr_fd(n / 10, fd);
+	ft_putchar_fd((n % 10) + '0', fd);
 }
 
 /*
@@ -27,7 +39,7 @@ void    main(void)
     write(1, "\n", 1);
 
     // Test 2: Negative number
-    ft_putnbr_fd(-9876, 1);  // Output: -9876
+    ft_putnbr_fd(-67890, 1);  // Output: -67890
     write(1, "\n", 1);
 
     // Test 3: Zero

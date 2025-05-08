@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_putendl_fd.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: giblee <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/07 12:30:16 by giblee            #+#    #+#             */
+/*   Updated: 2025/05/07 12:31:02 by giblee           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft.h"
 
 //Outputs the string 's' to the specified file descriptor followed by a newline.
@@ -6,14 +18,14 @@ void	ft_putendl_fd(char *s, int fd)
 	int	i;
 
 	if (!s)
-        return ;
+		return ;
 	i = 0;
 	while (s[i])
 	{
 		write(fd, &s[i], 1);
 		i++;
 	}
-    write(fd, "\n", 1);
+	write(fd, "\n", 1);
 }
 
 /*

@@ -6,13 +6,13 @@
 /*   By: giblee <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 13:04:11 by giblee            #+#    #+#             */
-/*   Updated: 2025/02/24 18:05:36 by giblee           ###   ########.fr       */
+/*   Updated: 2025/05/07 11:15:19 by giblee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t	ft_strlen(const char *s);
+// size_t	ft_strlen(const char *s);
 
 // Appends src to the end of dest, making sure not to write more than size - 1 
 // characters in total (including the original content of dest), 

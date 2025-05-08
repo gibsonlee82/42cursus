@@ -1,10 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_memset.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: giblee <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/07 11:06:00 by giblee            #+#    #+#             */
+/*   Updated: 2025/05/07 12:51:21 by giblee           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft.h"
 // #include <stddef.h>
 
 // set a block of memory to specific value
 void	*ft_memset(void *ptr, int value, size_t num)
 {
-	unsigned char *nptr;
+	unsigned char	*nptr;
 
 	nptr = (unsigned char *) ptr;
 	while (num > 0)
@@ -13,5 +25,5 @@ void	*ft_memset(void *ptr, int value, size_t num)
 		nptr++;
 		num--;
 	}
-    return (ptr);
+	return (ptr);
 }

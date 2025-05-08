@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: giblee <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/07 12:28:38 by giblee            #+#    #+#             */
+/*   Updated: 2025/05/07 12:29:41 by giblee           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft.h"
 
 // Outputs the string 's' to the specified file descriptor.
@@ -6,7 +18,7 @@ void	ft_putstr_fd(char *s, int fd)
 	int	i;
 
 	if (!s)
-        return ;
+		return ;
 	i = 0;
 	while (s[i])
 	{

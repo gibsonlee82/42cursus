@@ -6,12 +6,12 @@
 /*   By: giblee <abc@abc.com>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 16:48:33 by giblee            #+#    #+#             */
-/*   Updated: 2025/03/06 11:51:06 by giblee           ###   ########.fr       */
+/*   Updated: 2025/05/07 12:05:50 by giblee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <stdlib.h>
+//#include <stdlib.h>
 
 // copy n char of string
 char	*ft_strdupword(const char *src, unsigned int n)
@@ -35,8 +35,8 @@ char	*ft_strdupword(const char *src, unsigned int n)
 char	**ft_split_redirect(char **result, const char *str, char c)
 {
 	const char	*c_str;
-	int		len;
-	int		num_string;
+	int			len;
+	int			num_string;
 
 	num_string = 0;
 	c_str = str;

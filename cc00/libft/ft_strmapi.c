@@ -1,32 +1,43 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_strmapi.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: giblee <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/07 12:14:40 by giblee            #+#    #+#             */
+/*   Updated: 2025/05/07 12:18:40 by giblee           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft.h"
 
 // Applies the function f to each char of the string s, 
 // passing its index as the first argument and the char itself as the second. 
 // A new string is created (using malloc(3)) to store the results from the 
 // successive applications of f.
-char *ft_strmapi(const char *s, char (*f)(unsigned int, char))
+char	*ft_strmapi(const char *s, char (*f)(unsigned int, char))
 {
-    size_t  i;
-    size_t  j;
-    char    *result;
+	size_t	i;
+	size_t	j;
+	char	*result;
 
-    if (!s || !f)
-        return (NULL);
-    i = 0;
-    while (s[i])
-        i++;
-    result = (char *)malloc(i + 1);
-    if (!result)
-        return (NULL);
-
-    j = 0;
-    while (j < i)
-    {
-        result[j] = f(j, s[j]);
-        j++;
-    }
-    result[j] = '\0';
-    return (result);
+	if (!s || !f)
+		return (NULL);
+	i = 0;
+	while (s[i])
+		i++;
+	result = (char *)malloc(i + 1);
+	if (!result)
+		return (NULL);
+	j = 0;
+	while (j < i)
+	{
+		result[j] = f(j, s[j]);
+		j++;
+	}
+	result[j] = '\0';
+	return (result);
 }
 
 /*
