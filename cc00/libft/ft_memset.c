@@ -16,13 +16,12 @@
 // set a block of memory to specific value
 void	*ft_memset(void *ptr, int value, size_t num)
 {
-	unsigned char	*nptr;
+	unsigned char	*str;
 
-	nptr = (unsigned char *) ptr;
+	str = (unsigned char *) ptr;
 	while (num > 0)
 	{
-		*nptr = (unsigned char) value;
-		nptr++;
+		str[num - 1] = (unsigned char) value;
 		num--;
 	}
 	return (ptr);

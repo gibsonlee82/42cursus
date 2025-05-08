@@ -15,21 +15,23 @@
 // Safer alternative to strcpy and strncpy for copying C strings.
 // Designed to prevent buffer overflows by always null-terminating the result.
 // Return: total length of the source string (strlen(src)).
-size_t	ft_strlcpy(char *dest, const char *src, size_t size)
+size_t	ft_strlcpy(char *dst, const char *src, size_t size)
 {
 	size_t	i;
+	size_t	j;
 
 	i = 0;
-	while (src[i] != '\0' && i < size - 1)
-	{
-		dest[i] = src[i];
+	while (src[i])
 		i++;
-	}
-	dest[i] = '\0';
-	while (src[i] != '\0')
+	if (size == 0)
+		return (i);
+	j = 0;
+	while (src[j] != '\0' && j < size - 1)
 	{
-		i++;
+		dst[j] = src[j];
+		j++;
 	}
+	dst[j] = '\0';
 	return (i);
 }
 

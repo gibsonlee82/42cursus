@@ -15,18 +15,17 @@
 // Return a pointer to the last occurrence of the char c in the str s
 char	*ft_strrchr(const char *s, int c)
 {
-	const char	*last;
+	int	i;
 
-	if (!s)
-		return (NULL);
-	last = NULL;
-	while (*s != '\0')
+	i = (int)ft_strlen(s);
+	if (!((unsigned char)c))
+		return ((char *)&s[i]);
+	while (i >= 0)
 	{
-		if (*s == (char)c)
-			last = s;
-		s++;
+		if (s[i] == (unsigned char)c)
+			return ((char *)&s[i]);
+		i--;
 	}
-	if (c == '\0')
-		return ((char *)s);
-	return ((char *)last);
+	return (NULL);
 }
+

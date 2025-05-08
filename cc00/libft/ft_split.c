@@ -11,15 +11,14 @@
 /* ************************************************************************** */
 
 #include "libft.h"
-//#include <stdlib.h>
 
-// copy n char of string
+// copy n char from string src
 char	*ft_strdupword(const char *src, unsigned int n)
 {
 	unsigned int	i;
 	char			*dest;
 
-	dest = malloc(sizeof(char) + (n + 1));
+	dest = malloc(sizeof(char) * (n + 1));
 	if (dest == NULL)
 		return (NULL);
 	i = 0;
@@ -32,31 +31,53 @@ char	*ft_strdupword(const char *src, unsigned int n)
 	return (dest);
 }
 
+// count number of words in string s
+int	ft_count_words(const char *s, char delimiter)
+{
+	int	count;
+	int	in_word;
+
+	count = 0;
+	in_word = 0;
+	while (*s)
+	{
+		if (*s != delimiter && !in_word)
+		{
+			in_word = 1;
+			count++;
+		}
+		else if (*s == delimiter)
+			in_word = 0;
+		s++;
+	}
+	return (count);
+}
+
 char	**ft_split_redirect(char **result, const char *str, char c)
 {
-	const char	*c_str;
+	const char	*start;
 	int			len;
 	int			num_string;
 
+	start = str;
 	num_string = 0;
-	c_str = str;
 	len = 0;
-	while (*str != '\0')
+	while (*str)
 	{
 		if (*str == c)
 		{
 			if (len > 0)
-				result[num_string++] = ft_strdupword(c_str, len);
+				result[num_string++] = ft_strdupword(start, len);
 			len = 0;
-			c_str = str + 1;
+			start = str + 1;
 		}
 		else
 			len++;
 		str++;
 	}
 	if (len > 0)
-		result[num_string] = ft_strdupword(c_str, len);
-	result[num_string + 1] = NULL;
+		result[num_string++] = ft_strdupword(start, len);
+	result[num_string] = NULL;
 	return (result);
 }
 
@@ -65,32 +86,47 @@ char	**ft_split_redirect(char **result, const char *str, char c)
 char	**ft_split(char const *s, char c)
 {
 	char	**result;
+	int		words;
 
-	result = malloc(sizeof(char *) * 9999);
+	if (!s)
+		return (NULL);
+	if (c == '\0')
+	{
+		result = malloc(sizeof(char *) * 2);
+		if (!result)
+			return (NULL);
+		result[0] = (char *) ft_strdup(s);
+		result[1] = (NULL);
+		return (result);
+	}
+	words = ft_count_words(s, c);
+	result = malloc(sizeof(char *) * (words + 1));
 	if (result == NULL)
 		return (NULL);
-	result = ft_split_redirect(result, s, c);
-	return (result);
+	return (ft_split_redirect(result, s, c));
 }
 
-/*
-#include <stdio.h>
-int	main(void)
-{
-	char	**result;
-	int	num_words;
-	int	i;
+// #include <stdio.h>
+// int	main(void)
+// {
+// 	char		**result;
+// 	int			num_words;
+// 	int			i;
+// 	// const char 	*str = "hello, how are you? I am fine.....";
+// 	// char		delimiter = '.';
+// 	const char 	*str = "\0aa\0bbb";
+// 	char		delimiter = '\0';
 
-	num_words = 0;
-	result = ft_split("hello, how are you? I am fine.", ' ');
-	//num_words = count_words("hello, how are you? I am fine.", ",? ");
-	//printf("number of words = %d\n", num_words);
-	i = 0;
-	while (result[i] != NULL)
-	{
-		printf("token #%d: %s\n", i, result[i]);
-		i++;
-	}
-	return (0);
-}
-*/
+// 	printf("String: %s\n", str);
+// 	num_words = 0;
+// 	result = ft_split(str, delimiter);
+// 	num_words = ft_count_words(str, delimiter);
+// 	printf("number of words = %d\n", num_words);
+// 	i = 0;
+// 	while (result[i] != NULL)
+// 	{
+// 		printf("token #%d: %s\n", i+1, result[i]);
+// 		i++;
+// 	}
+// 	return (0);
+// }
