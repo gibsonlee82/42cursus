@@ -84,15 +84,15 @@ char	*ft_get_remain(char *s)
 
 char	*get_data(int fd, char *stash)
 {
-	char 			buffer[BUFFER_SIZE];
-	int 			bytes_read;
+	char	buffer[BUFFER_SIZE];
+	int		bytes_read;
 
 	bytes_read = 1;
 	while (!ft_has_newline(stash) && bytes_read)
 	{
 		bytes_read = read(fd, buffer, BUFFER_SIZE);
 		if (bytes_read <= 0)
-			return (NULL) ;
+			return (NULL);
 		stash = ft_strjoin(stash, buffer, bytes_read);
 	}
 	return (stash);

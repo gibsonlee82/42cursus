@@ -66,20 +66,3 @@ char	*ft_strjoin(char *s1, char *s2, int s2_len)
 	result[i + j] = '\0';
 	return (result);
 }
-
-// Return a pointer to the 1st occurrence of the char c in the string s
-// Return NULL if c is not found
-char	*ft_strchr(const char *s, int c)
-{
-	if (!s)
-		return (0);
-	while (*s)
-	{
-		if (*s == (char)c)
-			return ((char *)s);
-		s++;
-	}
-	if ((char)c == *s)
-		return ((char *)s);
-	return (NULL);
-}
