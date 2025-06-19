@@ -19,7 +19,12 @@ static int	ft_format(const char *format, va_list args)
 	else if (*format == 's')
 		return (ft_putstr(va_arg(args, char *)));
 	else if (*format == 'p')
-		return (write(1, "0x", 2) + ft_putptr((unsigned long)va_arg(args, void *)));
+	{
+		void *ptr = va_arg(args, void *);
+		if (!ptr)
+			return (write(1, "(nil)", 5));
+		return (write(1, "0x", 2) + ft_putptr((unsigned long)ptr));
+	}
 	else if (*format == 'd' || *format == 'i')
 		return (ft_putnbr(va_arg(args, int)));
 	else if (*format == 'u')
@@ -45,7 +50,10 @@ int	ft_printf(const char *format, ...)
 	while (format[i])
 	{
 		if (format[i] == '%' && format[i + 1])
-			count += ft_format(&format[++i], args);
+		{
+			i++;
+			count += ft_format(&format[i], args);
+		}
 		else
 			count += ft_putchar(format[i]);
 		i++;
