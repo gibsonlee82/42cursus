@@ -14,15 +14,15 @@
 
 static int	ft_format(const char *format, va_list args)
 {
+	void	*ptr;
+
 	if (*format == 'c')
 		return (ft_putchar(va_arg(args, int)));
 	else if (*format == 's')
 		return (ft_putstr(va_arg(args, char *)));
 	else if (*format == 'p')
 	{
-		void	*ptr;
-
-		ptr = va:_arg(args, void *);
+		ptr = va_arg(args, void *);
 		if (!ptr)
 			return (write(1, "(nil)", 5));
 		return (write(1, "0x", 2) + ft_putptr((unsigned long)ptr));
@@ -63,4 +63,3 @@ int	ft_printf(const char *format, ...)
 	va_end(args);
 	return (count);
 }
-

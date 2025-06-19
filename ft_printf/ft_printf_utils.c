@@ -17,7 +17,10 @@ int	ft_puthex(unsigned int n, int uppercase)
 	char	*hex;
 	int		count;
 
-	hex = (uppercase ? "0123456789ABCDEF" : "0123456789abcdef");
+	if (uppercase)
+		hex = "0123456789ABCDEF";
+	else
+		hex = "0123456789abcdef";
 	count = 0;
 	if (n >= 16)
 		count += ft_puthex(n / 16, uppercase);
