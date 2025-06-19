@@ -20,7 +20,9 @@ static int	ft_format(const char *format, va_list args)
 		return (ft_putstr(va_arg(args, char *)));
 	else if (*format == 'p')
 	{
-		void *ptr = va_arg(args, void *);
+		void	*ptr;
+
+		ptr = va:_arg(args, void *);
 		if (!ptr)
 			return (write(1, "(nil)", 5));
 		return (write(1, "0x", 2) + ft_putptr((unsigned long)ptr));
