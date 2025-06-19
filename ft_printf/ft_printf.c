@@ -12,6 +12,12 @@
 
 #include "ft_printf.h"
 
+// Purpose: Handles each individual format specifier found in ft_printf. 
+// Selects the appropriate helper function based on the specifier.
+// Parameters:
+//   format: pointer to the format specifier character (e.g., 'd', 's').
+//   args: the list of variable arguments.
+// Returns: Number of characters printed for the given specifier.
 static int	ft_format(const char *format, va_list args)
 {
 	void	*ptr;
@@ -40,6 +46,12 @@ static int	ft_format(const char *format, va_list args)
 	return (0);
 }
 
+// Purpose: Custom implementation of printf. It parses the format string 
+//   & prints formatted data based on format specifiers (eg. %d, %s, etc)
+// Parameters:
+//   format: a C-string containing text and format specifiers
+// ...: variable number of arg that correspond to the format specifiers
+// Returns: Total number of characters printed.
 int	ft_printf(const char *format, ...)
 {
 	va_list	args;

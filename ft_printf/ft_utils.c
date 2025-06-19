@@ -12,11 +12,18 @@
 
 #include "ft_printf.h"
 
+// Purpose: Writes a single character to standard output.
+// Parameters: c — the character to print.
+// Returns: Always returns 1 (one character printed).
 int	ft_putchar(char c)
 {
 	return (write(1, &c, 1));
 }
 
+// Purpose: Writes a string to standard output.
+// Parameters: s — the string to print.
+// Returns: Number of characters printed. 
+//   If s is NULL, prints (null) and returns 6.
 int	ft_putstr(char *s)
 {
 	int	i;
@@ -29,6 +36,9 @@ int	ft_putstr(char *s)
 	return (i);
 }
 
+// Purpose: Prints a signed integer to standard output using recursion.
+// Parameters: n — the integer to print.
+// Returns: Number of characters printed.
 int	ft_putnbr(int n)
 {
 	long	num;
@@ -47,6 +57,9 @@ int	ft_putnbr(int n)
 	return (count);
 }
 
+// Purpose: Prints an unsigned integer to standard output using recursion.
+// Parameters: n — the unsigned integer to print.
+// Returns: Number of characters printed.
 int	ft_putnbr_unsigned(unsigned int n)
 {
 	int	count;

@@ -12,6 +12,11 @@
 
 #include "ft_printf.h"
 
+// Purpose: Prints an unsigned int as a hex string (lowercase or uppercase).
+// Parameters:
+//   n: the number to convert and print in hex.
+//   uppercase: if 1, uses uppercase letters (A-F); otherwise, lowercase (a-f).
+// Returns: Number of characters printed.
 int	ft_puthex(unsigned int n, int uppercase)
 {
 	char	*hex;
@@ -28,6 +33,10 @@ int	ft_puthex(unsigned int n, int uppercase)
 	return (count);
 }
 
+// Purpose: Prints a memory address (pointer) as a hexadecimal number, 
+//   excluding the "0x" prefix (which is printed in ft_format).
+// Parameters: n — the pointer value cast to unsigned long.
+// Returns: Number of characters printed.
 int	ft_putptr(unsigned long n)
 {
 	char	*hex;
