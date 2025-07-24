@@ -100,11 +100,11 @@ void	error_exit(char *text, int exit_code)
   - If 'text' is not NULL and not empty, prints it to stderr using error_exit().
   - Otherwise, exits directly with the provided exit_code.
  **********************************************************************/
-void    free_split_error_exit(char **arr, char *text, int exit_code)
+void	free_split_error_exit(char **arr, char *text, int exit_code)
 {
-    	free_split(arr);
-        if (text != NULL && *text != '\0')
-            error_exit(text, exit_code);
-        else
-            exit(exit_code);
+	free_split(arr);
+	if (text != NULL && *text != '\0')
+		error_exit(text, exit_code);
+	else
+		exit(exit_code);
 }

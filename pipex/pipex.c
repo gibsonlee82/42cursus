@@ -62,10 +62,10 @@ void	run_pipex(char **argv, char **envp, pid_t *pid1, pid_t *pid2)
 		perror("pipe");
 		return ;
 	}
-    *pid1 = fork();
+	*pid1 = fork();
 	if (*pid1 == 0)
 		child1_process(argv, envp, pipefd, infile);
-    *pid2 = fork();
+	*pid2 = fork();
 	if (*pid2 == 0)
 		child2_process(argv, envp, pipefd, outfile);
 	close(pipefd[0]);
@@ -99,14 +99,12 @@ void	child1_process(char **argv, char **envp, int *pipefd, int infile)
 	if (!cmd_path)
 	{
 		perror("cmd1 not found");
-        //free_split_exit(cmd, 1);
-        free_split_error_exit(cmd, NULL, 1);
+		free_split_error_exit(cmd, NULL, 1);
 	}
 	execve(cmd_path, cmd, envp);
 	perror("execve failed");
 	free(cmd_path);
-    //free_split_exit(cmd, 1);
-    free_split_error_exit(cmd, NULL, 1);
+	free_split_error_exit(cmd, NULL, 1);
 }
 
 /**********************************************************************
@@ -130,21 +128,12 @@ void	child2_process(char **argv, char **envp, int *pipefd, int outfile)
 	close(pipefd[1]);
 	cmd = ft_split(argv[3], ' ');
 	if (!cmd || !cmd[0] || cmd[0][0] == '\0')
-	{
-		// free_split(cmd);
-		// error_exit("Empty command\n", 127);
-        free_split_error_exit(cmd, "Empty command\n", 127);
-	}
+		free_split_error_exit(cmd, "Empty command\n", 127);
 	cmd_path = get_cmd_path(cmd[0], envp);
 	if (!cmd_path)
-	{
-		// free_split(cmd);
-		// error_exit("command not found\n", 127);
-        free_split_error_exit(cmd, "command not found\n", 127);
-	}
+		free_split_error_exit(cmd, "command not found\n", 127);
 	execve(cmd_path, cmd, envp);
 	perror("execve failed");
 	free(cmd_path);
-    //free_split_exit(cmd, 1);
-    free_split_error_exit(cmd, NULL, 1);
+	free_split_error_exit(cmd, NULL, 1);
 }

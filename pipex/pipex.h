@@ -15,11 +15,11 @@ void	child2_process(char **argv, char **envp, int *pipefd, int outfile);
 
 // utils.c
 void	free_split(char **arr);
-char    *get_cmd_path(char *cmd, char **envp);
-char    **get_cmd_path_env(char **envp);
+char	*get_cmd_path(char *cmd, char **envp);
+char	**get_cmd_path_env(char **envp);
 // void	free_split_exit(char **arr, int exit_code);
 void	error_exit(char *text, int exit_code);
-void    free_split_error_exit(char **arr, char *text, int exit_code);
+void	free_split_error_exit(char **arr, char *text, int exit_code);
 
 // libft
 char	**ft_split(char const *s, char c);
