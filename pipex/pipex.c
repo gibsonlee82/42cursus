@@ -89,6 +89,7 @@ void	child1_process(char **argv, char **envp, int *pipefd, int infile)
 	dup2(infile, 0);
 	dup2(pipefd[1], 1);
 	close(pipefd[0]);
+	close(pipefd[1]);
 	cmd = ft_split(argv[2], ' ');
 	if (!cmd || !cmd[0] || cmd[0][0] == '\0')
 	{
@@ -126,6 +127,7 @@ void	child2_process(char **argv, char **envp, int *pipefd, int outfile)
 	dup2(pipefd[0], 0);
 	dup2(outfile, 1);
 	close(pipefd[1]);
+	close(pipefd[0]);
 	cmd = ft_split(argv[3], ' ');
 	if (!cmd || !cmd[0] || cmd[0][0] == '\0')
 		free_split_error_exit(cmd, "Empty command\n", 127);
