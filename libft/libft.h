@@ -16,7 +16,6 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <limits.h>
-// # include <errno.h>
 
 //////////////////////////
 // Part 1: Libc functions
