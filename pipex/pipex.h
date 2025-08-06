@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   pipex.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: giblee <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/06 10:06:56 by giblee            #+#    #+#             */
+/*   Updated: 2025/08/06 10:24:44 by giblee           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef PIPEX_H
 # define PIPEX_H
 
@@ -17,9 +29,9 @@ void	child2_process(char **argv, char **envp, int *pipefd, int outfile);
 void	free_split(char **arr);
 char	*get_cmd_path(char *cmd, char **envp);
 char	**get_cmd_path_env(char **envp);
-// void	free_split_exit(char **arr, int exit_code);
 void	error_exit(char *text, int exit_code);
 void	free_split_error_exit(char **arr, char *text, int exit_code);
+// void	free_split_exit(char **arr, int exit_code);
 
 // libft
 char	**ft_split(char const *s, char c);

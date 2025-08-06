@@ -47,21 +47,20 @@ BSRCS =	ft_lstnew_bonus.c \
 
 OBJS = ${SRCS:.c=.o}
 BOBJS = ${BSRCS:.c=.o}
-HDR = libft.h
 
-all: $(NAME)
+%.o: %.c
+	${COMPILER} ${CFLAGS} -c $< -o $@
 
 ${NAME}: ${OBJS}
 	ar rcs ${NAME} ${OBJS}
 
-%.o: %.c ${HDR}
-	${COMPILER} ${CFLAGS} -c $< -o $@
+all: $(NAME)
 
 bonus:	$(OBJS) $(BOBJS)
 	ar rcs ${NAME} $(OBJS) $(BOBJS)
 
 clean:
-	rm -f $(OBJS) $(BOBJS)
+	rm -rf *.o
 
 fclean: clean
 	rm -f ${NAME}
