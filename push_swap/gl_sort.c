@@ -50,48 +50,104 @@ void	index_stack(t_list *stack)
 	}
 }
 
+// void	radix_sort(t_list **a, t_list **b)
+// {
+// 	int		size;
+// 	int		max_bits;
+// 	int		i;
+// 	int		j;
+// 	t_data	*d;
+
+// 	size = ft_lstsize(*a);
+// 	max_bits = 0;
+// 	while ((size - 1) >> max_bits)
+// 		max_bits++;
+// 	i = 0;
+// 	while (i < max_bits)
+// 	{
+// 		j = 0;
+// 		while (j < size)
+// 		{
+// 			d = (*a)->content;
+// 			if ((d->index >> i) & 1)
+// 				ra(a);
+// 			else
+// 				pb(a, b);
+// 			j++;
+// 		}
+// 		while (*b)
+// 			pa(a, b);
+// 		i++;
+// 	}
+// }
+
 /**********************************************************************
-* radix_sort: Sorts a stack using bitwise radix sort via an auxiliary stack.
-* - a: Pointer to the main stack.
-* - b: Pointer to the auxiliary stack.
-*
-* This function:
-* - Computes the number of bits needed for the maximum index.
-* - For each bit position:
-*     - Pushes nodes with 0 at that bit to stack B.
-*     - Rotates nodes with 1 at that bit in stack A.
-* - Moves all nodes back from B to A.
-*
-* Requires:
-* - Each node has a valid index assigned by index_stack().
-**********************************************************************/
-void	radix_sort(t_list **a, t_list **b)
+ * process_bit_pass
+ * ----------------
+ * Processes one pass of radix sort for a specific bit position.
+ * 
+ * Parameters:
+ *   a   - Pointer to stack A (list of t_data* nodes).
+ *   b   - Pointer to stack B (used as a temporary stack).
+ *   bit - Bit position to check (0 = least significant bit).
+ *   size- Total number of elements in stack A.
+ * 
+ * Behavior:
+ *   - Iterates through all elements in stack A.
+ *   - Checks if the bit at position `bit` is set in d->index.
+ *   - If bit is set, rotates stack A (ra).
+ *   - If bit is not set, pushes to stack B (pb).
+ *   - After processing all elements, pushes all from B back to A.
+ **********************************************************************/
+static void	process_bit_pass(t_list **a, t_list **b, int bit, int size)
 {
-	int		size;
-	int		max_bits;
-	int		i;
 	int		j;
 	t_data	*d;
+
+	j = 0;
+	while (j < size)
+	{
+		d = (*a)->content;
+		if ((d->index >> bit) & 1)
+			ra(a);
+		else
+			pb(a, b);
+		j++;
+	}
+	while (*b)
+		pa(a, b);
+}
+
+/**********************************************************************
+ * radix_sort
+ * ----------
+ * Sorts the stack A using a binary radix sort algorithm.
+ * 
+ * Parameters:
+ *   a - Pointer to stack A (list of t_data* nodes).
+ *   b - Pointer to stack B (temporary stack, initially empty).
+ * 
+ * Behavior:
+ *   - Calculates the maximum number of bits needed based on the
+ *     largest index in stack A.
+ *   - For each bit position (from LSB to MSB):
+ *       Calls process_bit_pass() to rearrange elements based on
+ *       the current bit.
+ *   - Sorting is done in ascending order based on index values.
+ **********************************************************************/
+void	radix_sort(t_list **a, t_list **b)
+{
+	int	size;
+	int	max_bits;
+	int	bit;
 
 	size = ft_lstsize(*a);
 	max_bits = 0;
 	while ((size - 1) >> max_bits)
 		max_bits++;
-	i = 0;
-	j = 0;
-	while (i++ < max_bits)
-	{
-		while (j++ < size)
-		{
-			d = (*a)->content;
-			if ((d->index >> i) & 1)
-				ra(a);
-			else
-				pb(a, b);
-		}
-		while (*b)
-			pa(a, b);
-	}
+	bit = 0;
+	while (bit < max_bits)
+		process_bit_pass(a, b, bit++, size);
 }
 
 // Main GL sort
