@@ -102,3 +102,30 @@ int	is_sorted(t_list *a)
 	}
 	return (1);
 }
+
+/**********************************************************************
+ * free_stack: Frees all nodes in a linked list stack.
+ * - stack: Double pointer to the head of the stack.
+ *
+ * This function:
+ * - Iterates through each node in the stack.
+ * - Frees the memory allocated for the node's content 
+ * - Frees the memory allocated for the node itself.
+ * - Sets the stack pointer to NULL after all nodes are freed.
+ *
+ * Usage:
+ * - Call when cleaning up before program exit to avoid memory leaks.
+ * - Ensure content freeing matches how content was allocated.
+ **********************************************************************/
+void	free_stack(t_list **stack)
+{
+	t_list	*tmp;
+
+	while (*stack)
+	{
+		tmp = (*stack)->next;
+		free((*stack)->content);
+		free(*stack);
+		*stack = tmp;
+	}
+}

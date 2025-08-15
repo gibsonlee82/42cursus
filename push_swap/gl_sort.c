@@ -50,37 +50,6 @@ void	index_stack(t_list *stack)
 	}
 }
 
-// void	radix_sort(t_list **a, t_list **b)
-// {
-// 	int		size;
-// 	int		max_bits;
-// 	int		i;
-// 	int		j;
-// 	t_data	*d;
-
-// 	size = ft_lstsize(*a);
-// 	max_bits = 0;
-// 	while ((size - 1) >> max_bits)
-// 		max_bits++;
-// 	i = 0;
-// 	while (i < max_bits)
-// 	{
-// 		j = 0;
-// 		while (j < size)
-// 		{
-// 			d = (*a)->content;
-// 			if ((d->index >> i) & 1)
-// 				ra(a);
-// 			else
-// 				pb(a, b);
-// 			j++;
-// 		}
-// 		while (*b)
-// 			pa(a, b);
-// 		i++;
-// 	}
-// }
-
 /**********************************************************************
  * process_bit_pass
  * ----------------

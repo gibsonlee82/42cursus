@@ -12,6 +12,31 @@
 #include "push_swap.h"
 #include <stdlib.h>
 
+// int	main(int argc, char **argv)
+// {
+// 	t_list	*a;
+// 	t_list	*b;
+
+// 	a = NULL;
+// 	b = NULL;
+// 	if (argc < 2)
+// 		return (0);
+// 	parse_args(argc, argv, &a);
+// 	if (is_sorted(a))
+// 		return (0);
+// 	gl_sort(&a, &b);
+// 	ft_lstclear(&a, free);
+// 	ft_lstclear(&b, free);
+// 	return (0);
+// }
+
+static int	cleanup_and_exit(t_list **a, t_list **b, int exit_code)
+{
+	free_stack(a);
+	free_stack(b);
+	return (exit_code);
+}
+
 int	main(int argc, char **argv)
 {
 	t_list	*a;
@@ -23,9 +48,7 @@ int	main(int argc, char **argv)
 		return (0);
 	parse_args(argc, argv, &a);
 	if (is_sorted(a))
-		return (0);
+		return (cleanup_and_exit(&a, &b, 0));
 	gl_sort(&a, &b);
-	ft_lstclear(&a, free);
-	ft_lstclear(&b, free);
-	return (0);
+	return (cleanup_and_exit(&a, &b, 0));
 }

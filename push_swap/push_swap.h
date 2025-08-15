@@ -63,7 +63,7 @@ void	gl_sort(t_list **a, t_list **b);
 int		is_sorted(t_list *a);
 int		is_valid_number(char *str);
 int		is_duplicate(t_list *a, int num);
-// int     *create_int(int num);
 void	error_exit(void);
+void    free_stack(t_list **stack);
 
 #endif
