@@ -6,7 +6,7 @@
 /*   By: giblee <abc@abc.com>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/07 10:00:33 by giblee            #+#    #+#             */
-/*   Updated: 2025/08/07 12:05:50 by giblee           ###   ########.fr       */
+/*   Updated: 2025/08/19 12:39:14 by giblee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "push_swap.h"
@@ -22,7 +22,7 @@
  *
  * The function assumes the array is null-terminated.
 **********************************************************************/
-static void	free_split(char **arr)
+void	free_split(char **arr)
 {
 	int	i;
 
@@ -32,6 +32,25 @@ static void	free_split(char **arr)
 	free(arr);
 }
 
+/**********************************************************************
+ * Safely parses a string into an integer with bounds checking.
+ * - str: Pointer to a null-terminated string representing an integer.
+ *
+ * This function:
+ * - Validates that the input string is not NULL or empty.
+ * - Parses an optional '+' or '-' sign at the beginning.
+ * - Ensures all characters after the sign are numeric digits.
+ * - Accumulates the numeric value into a long to detect overflows.
+ * - Checks for overflow/underflow relative to INT_MAX and INT_MIN.
+ * - Calls error_exit(NULL, NULL) on invalid input or out-of-bounds value.
+ *
+ * Returns:
+ * - The parsed integer as an int.
+ *
+ * This function guarantees:
+ * - Only valid, bounded integers are returned.
+ * - Malformed or unsafe inputs trigger a controlled exit.
+ **********************************************************************/
 static int	parse_int_safe(const char *str)
 {
 	long	result;
@@ -42,19 +61,19 @@ static int	parse_int_safe(const char *str)
 	sign = 1;
 	i = 0;
 	if (!str || !*str)
-		error_exit();
+		error_exit(NULL, NULL);
 	if (str[i] == '-' || str[i] == '+')
 		if (str[i++] == '-')
 			sign = -1;
 	while (str[i])
 	{
 		if (str[i] < '0' || str[i] > '9')
-			error_exit();
+			error_exit(NULL, NULL);
 		result = result * 10 + (str[i] - '0');
 		if (sign == 1 && result > INT_MAX)
-			error_exit();
+			error_exit(NULL, NULL);
 		if (sign == -1 && (sign * result) < INT_MIN)
-			error_exit();
+			error_exit(NULL, NULL);
 		i++;
 	}
 	return ((int)(sign * result));
@@ -73,29 +92,29 @@ static int	parse_int_safe(const char *str)
 *
 * On error (invalid number, duplicate, or malloc failure), calls error_exit().
 **********************************************************************/
-static void	add_number(t_list **a, char *str)
+static void	add_number(t_list **a, char **split, char *str)
 {
 	int		num;
 	t_list	*new_node;
 	t_data	*new_data;
 
 	if (!is_valid_number(str))
-		error_exit();
+		error_exit(NULL, NULL);
 	num = parse_int_safe(str);
 	if (is_duplicate(*a, num))
-		error_exit();
+		error_exit(a, split);
 	if (num < INT_MIN || num > INT_MAX || is_duplicate(*a, num))
-		error_exit();
+		error_exit(NULL, NULL);
 	new_data = malloc(sizeof(t_data));
 	if (!new_data)
-		error_exit();
+		error_exit(NULL, NULL);
 	new_data->value = (int)num;
 	new_data->index = -1;
 	new_node = ft_lstnew(new_data);
 	if (!new_node)
 	{
 		free(new_data);
-		error_exit();
+		error_exit(&new_node, split);
 	}
 	ft_lstadd_back(a, new_node);
 }
@@ -118,11 +137,11 @@ static void	parse_string(t_list **a, char *arg)
 
 	nums = ft_split(arg, ' ');
 	if (!nums)
-		error_exit();
+		error_exit(NULL, NULL);
 	j = 0;
 	while (nums[j])
 	{
-		add_number(a, nums[j]);
+		add_number(a, nums, nums[j]);
 		j++;
 	}
 	free_split(nums);

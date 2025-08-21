@@ -6,7 +6,7 @@
 /*   By: giblee <abc@abc.com>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/07 10:50:33 by giblee            #+#    #+#             */
-/*   Updated: 2025/08/07 12:05:50 by giblee           ###   ########.fr       */
+/*   Updated: 2025/08/19 11:06:25 by giblee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "push_swap.h"
@@ -40,8 +40,8 @@ static void	get_top3indices(t_list *a, int *first, int *second, int *third)
  *        Example: 2 1 3 -> sa -> 1 2 3
  *     2. first > second > third: sa + rra
  *        Example: 3 2 1 -> sa -> 2 3 1 -> rra -> 1 2 3
- *     3. first > second < third, second < third: ra
- *        Example: 2 1 3 -> ra -> 1 3 2 (then next iteration would sort)
+ *     3. first > second < third, first > third: ra
+ *        Example: 3 1 2 -> ra -> 1 2 3
  *     4. first < second > third, first > third: rra
  *        Example: 2 3 1 -> rra -> 1 2 3
  *     5. first < second > third, first < third: sa + ra
@@ -57,18 +57,18 @@ void	sort_three(t_list **a)
 	int	third;
 
 	get_top3indices(*a, &first, &second, &third);
-	if (first > second && first < third)
+	if (first > second && second < third && first < third)
 		sa(a);
 	else if (first > second && second > third)
 	{
 		sa(a);
 		rra(a);
 	}
-	else if (first > second && second < third)
+	else if (first > second && second < third && first > third)
 		ra(a);
-	else if (first < second && first > third)
+	else if (first < second && second > third && first > third)
 		rra(a);
-	else if (first < second && second > third)
+	else if (first < second && second > third && first < third)
 	{
 		sa(a);
 		ra(a);
@@ -98,7 +98,7 @@ static int	find_min_index_pos(t_list *stack)
 	while (stack)
 	{
 		data = stack->content;
-		if (data->index < min_index)
+		if (data && (data->index < min_index))
 		{
 			min_index = data->index;
 			min_pos = pos;

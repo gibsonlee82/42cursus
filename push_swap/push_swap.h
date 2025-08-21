@@ -6,7 +6,7 @@
 /*   By: giblee <abc@abc.com>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/07 10:00:33 by giblee            #+#    #+#             */
-/*   Updated: 2025/08/07 12:05:50 by giblee           ###   ########.fr       */
+/*   Updated: 2025/08/19 11:04:18 by giblee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef PUSH_SWAP_H
@@ -35,6 +35,7 @@ typedef struct s_data
 }	t_data;
 
 // Parsing
+void	free_split(char **arr);
 void	parse_args(int argc, char **argv, t_list **a);
 
 // Operations
@@ -63,7 +64,7 @@ void	gl_sort(t_list **a, t_list **b);
 int		is_sorted(t_list *a);
 int		is_valid_number(char *str);
 int		is_duplicate(t_list *a, int num);
-void	error_exit(void);
-void    free_stack(t_list **stack);
+void	error_exit(t_list **stack, char **str);
+void	free_stack(t_list **stack);
 
 #endif

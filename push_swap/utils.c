@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse.c                                            :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: giblee <abc@abc.com>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/07 10:50:33 by giblee            #+#    #+#             */
-/*   Updated: 2025/08/07 12:05:50 by giblee           ###   ########.fr       */
+/*   Updated: 2025/08/19 11:06:43 by giblee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "push_swap.h"
@@ -69,8 +69,12 @@ int	is_duplicate(t_list *a, int num)
 	return (0);
 }
 
-void	error_exit(void)
+void	error_exit(t_list **stack, char **split)
 {
+	if (stack)
+		free_stack(stack);
+	if (split)
+		free_split(split);
 	write(2, "Error\n", 6);
 	exit(EXIT_FAILURE);
 }
