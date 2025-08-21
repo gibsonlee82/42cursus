@@ -49,6 +49,6 @@ int	main(int argc, char **argv)
 	parse_args(argc, argv, &a);
 	if (is_sorted(a))
 		return (cleanup_and_exit(&a, &b, 0));
-	gl_sort(&a, &b);
+	gl_sort2(&a, &b);
 	return (cleanup_and_exit(&a, &b, 0));
 }

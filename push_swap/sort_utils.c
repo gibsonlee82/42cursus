@@ -16,16 +16,16 @@
  * - a: Pointer to the start of the stack.
  * - first, second, third: Pointers to integers to store the indices.
  **********************************************************************/
-static void	get_top3indices(t_list *a, int *first, int *second, int *third)
+static void	get_top3values(t_list *a, int *first, int *second, int *third)
 {
 	t_data	*data;
 
 	data = a->content;
-	*first = data->index;
+	*first = data->value;
 	data = a->next->content;
-	*second = data->index;
+	*second = data->value;
 	data = a->next->next->content;
-	*third = data->index;
+	*third = data->value;
 }
 
 /**********************************************************************
@@ -56,7 +56,7 @@ void	sort_three(t_list **a)
 	int	second;
 	int	third;
 
-	get_top3indices(*a, &first, &second, &third);
+	get_top3values(*a, &first, &second, &third);
 	if (first > second && second < third && first < third)
 		sa(a);
 	else if (first > second && second > third)
@@ -76,84 +76,67 @@ void	sort_three(t_list **a)
 }
 
 /**********************************************************************
- * find_min_index_pos: Finds the position of the smallest index in the stack.
- * - stack: Pointer to the start of the stack.
+ * Checks if the stack is sorted in ascending order.
+ * - a: Pointer to the stack to be checked.
+ *
+ * This function:
+ * - Iterates through the stack from top to bottom.
+ * - Compares each element with the next one.
  *
  * Returns:
- * - Zero-based position of the smallest index.
- **********************************************************************/
-static int	find_min_index_pos(t_list *stack)
-{
-	t_data	*data;
-	int		min_index;
-	int		pos;
-	int		min_pos;
-
-	pos = 0;
-	min_pos = 0;
-	if (!stack)
-		return (-1);
-	data = stack->content;
-	min_index = data->index;
-	while (stack)
-	{
-		data = stack->content;
-		if (data && (data->index < min_index))
-		{
-			min_index = data->index;
-			min_pos = pos;
-		}
-		pos++;
-		stack = stack->next;
-	}
-	return (min_pos);
-}
-
-/**********************************************************************
- * push_min_to_b: Moves the smallest element from stack A to stack B.
- * - a: Pointer to the main stack (source).
- * - b: Pointer to the auxiliary stack (destination).
- *
- * This function:
- * - Finds the smallest element in stack A.
- * - Rotates or reverse-rotates A to bring it to the top.
- * - Pushes the smallest element to stack B.
- **********************************************************************/
-static void	push_min_to_b(t_list **a, t_list **b)
-{
-	int	min_pos;
-	int	size;
-
-	min_pos = find_min_index_pos(*a);
-	size = ft_lstsize(*a);
-	if (min_pos <= size / 2)
-		while (min_pos-- > 0)
-			ra(a);
-	else
-		while (min_pos++ < size)
-			rra(a);
-	pb(a, b);
-}
-
-/**********************************************************************
- * sort_five: Sorts a stack containing up to five elements in ascending order.
- * - a: Pointer to the main stack.
- * - b: Pointer to the auxiliary stack.
- *
- * This function:
- * - Moves the smallest elements from stack A to stack B until three remain.
- * - Sorts the remaining three elements using sort_three().
- * - Pushes back all elements from B to A.
- *
- * Assumes:
- * - Each element has a valid index.
- * - No duplicate elements exist.
+ * - 1 if the stack is sorted in ascending order.
+ * - 0 if any element is greater than the next element.
 **********************************************************************/
-void	sort_five(t_list **a, t_list **b)
+int	is_sorted(t_list *a)
 {
-	while (ft_lstsize(*a) > 3)
-		push_min_to_b(a, b);
-	sort_three(a);
-	while (*b)
-		pa(a, b);
+	t_data	*curr;
+	t_data	*next;
+
+	while (a && a->next)
+	{
+		curr = a->content;
+		next = a->next->content;
+		if (curr->value > next->value)
+			return (0);
+		a = a->next;
+	}
+	return (1);
+}
+
+/**********************************************************************
+ * find_min_index_pos:
+ *  Finds the position of the smallest indexed element in a stack.
+ *
+ *  Parameters:
+ *    - stack: The stack to search
+ *
+ *  Returns:
+ *    - The 0-based position of the element with the smallest index
+ **********************************************************************/
+int find_min_value_pos(t_list *stack)
+{
+    int min_value;
+    int pos;
+    int min_pos;
+    t_list *tmp;
+
+    if (!stack)
+        return (-1);
+
+    tmp = stack;
+    min_value = ((t_data *)tmp->content)->value;
+    pos = 0;
+    min_pos = 0;
+
+    while (tmp)
+    {
+        if (((t_data *)tmp->content)->value < min_value)
+        {
+            min_value = ((t_data *)tmp->content)->value;
+            min_pos = pos;
+        }
+        tmp = tmp->next;
+        pos++;
+    }
+    return (min_pos);
 }

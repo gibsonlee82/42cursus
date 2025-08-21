@@ -79,32 +79,22 @@ void	error_exit(t_list **stack, char **split)
 	exit(EXIT_FAILURE);
 }
 
-/**********************************************************************
- * Checks if the stack is sorted in ascending order.
- * - a: Pointer to the stack to be checked.
- *
- * This function:
- * - Iterates through the stack from top to bottom.
- * - Compares each element with the next one.
- *
- * Returns:
- * - 1 if the stack is sorted in ascending order.
- * - 0 if any element is greater than the next element.
-**********************************************************************/
-int	is_sorted(t_list *a)
+/************************************************************************
+ * Get the nth node of a linked list.
+ * 	- lst: The linked list
+ *  - index: Zero-based index
+ * Return: Pointer to the nth node, or NULL if out of range.
+ ***********************************************************************/
+t_list *ft_lstget(t_list *lst, int index)
 {
-	t_data	*curr;
-	t_data	*next;
+    int i = 0;
 
-	while (a && a->next)
-	{
-		curr = a->content;
-		next = a->next->content;
-		if (curr->value > next->value)
-			return (0);
-		a = a->next;
-	}
-	return (1);
+    while (lst && i < index)
+    {
+        lst = lst->next;
+        i++;
+    }
+    return (lst);
 }
 
 /**********************************************************************

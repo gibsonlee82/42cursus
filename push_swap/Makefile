@@ -1,13 +1,15 @@
 NAME = push_swap
 
-SRC =	gl_sort.c \
+SRC =	gl_sort2.c \
 		ops_push.c \
 		ops_rev_rot.c \
 		ops_rot.c \
 		ops_swap.c \
 		parse.c \
+		push_back_to_a.c \
 		push_swap.c \
-		sort_small.c \
+		push_to_b_sorted.c \
+		sort_utils.c \
 		utils.c
 
 OBJ = $(SRC:.c=.o)
