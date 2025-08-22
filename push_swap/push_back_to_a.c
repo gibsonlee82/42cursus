@@ -12,7 +12,22 @@
 
 #include "push_swap.h"
 
-static int get_source_position(t_list *a, int val)
+/**********************************************************************
+ *  Finds the correct position in stack A to insert a given value
+ *  from stack B while maintaining ascending order.
+ *  - a: Stack A
+ *  - val: Value to insert
+ *
+ * Returns:
+ *  - 0-based index in A where 'val' should be inserted.
+ *    If the value fits between two elements, returns position + 1.
+ *    Wrap-around is handled if 'val' is smaller than the smallest
+ *    or larger than the largest element in A.
+ *
+ * Notes:
+ *  - If stack A is empty, returns 0.
+ **********************************************************************/
+static int get_insert_position(t_list *a, int val)
 {
     int pos;
     int curr;
@@ -29,10 +44,9 @@ static int get_source_position(t_list *a, int val)
         if (tmp->next)
             next = ((t_data *)tmp->next->content)->value;
         else
-            next = ((t_data *)a->content)->value; // wrap-around
-        // Check if val fits between curr and next (ascending order)
+            next = ((t_data *)a->content)->value;
         if ((curr < val && val < next) || 
-            (curr > next && (val > curr || val < next))) // wrap-around case
+            (curr > next && (val > curr || val < next)))
             return (pos + 1);
         tmp = tmp->next;
         pos++;
@@ -41,16 +55,20 @@ static int get_source_position(t_list *a, int val)
 }
 
 /**********************************************************************
- * rotate_to_top:
  * Rotates stack s so that the element at index comes to top.
- * Uses simultaneous rotation with paired stack if both costs align.
  * - s: target stack
  * - index: position to bring to top
  **********************************************************************/
 static void rotate_to_top(t_list **a, int index)
 {
-    int size = ft_lstsize(*a);
-    int cost = (index <= size / 2) ? index : index - size;
+    int size;
+    int cost;
+
+    size = ft_lstsize(*a);
+    if (index < size / 2)
+        cost = index;
+    else
+        cost = index - size;
     while (cost > 0)
     {
         ra(a);
@@ -74,12 +92,12 @@ static void rotate_to_top(t_list **a, int index)
 void push_back_to_a(t_list **a, t_list **b)
 {
     int val;
-    int target;
+    int pos;
     while (*b)
     {
         val = ((t_data *)(*b)->content)->value;
-        target = get_source_position(*a, val);
-        rotate_to_top(a, target);
+        pos = get_insert_position(*a, val);
+        rotate_to_top(a, pos);
         pa(a, b);
     }
 }

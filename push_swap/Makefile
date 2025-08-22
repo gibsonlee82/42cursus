@@ -1,6 +1,7 @@
 NAME = push_swap
 
-SRC =	gl_sort2.c \
+SRC =	execute_rotations.c \
+		gl_sort2.c \
 		ops_push.c \
 		ops_rev_rot.c \
 		ops_rot.c \

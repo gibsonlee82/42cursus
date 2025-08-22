@@ -64,11 +64,13 @@ void	rrr(t_list **a, t_list **b);
 void	sort_three(t_list **a);
 t_list	*ft_lstget(t_list *lst, int index);
 int		find_min_value_pos(t_list *stack);
+int		ft_max(int a, int b);
 
 // Sorting algo
 void	gl_sort2(t_list **a, t_list **b);
 void	push_back_to_a(t_list **a, t_list **b);
 void	push_to_b_sorted(t_list **a, t_list **b);
+void	execute_rotations(t_list **a, t_list **b, int cost_a, int cost_b);
 
 // Utils
 int		is_sorted(t_list *a);

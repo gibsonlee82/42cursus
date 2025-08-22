@@ -140,3 +140,14 @@ int find_min_value_pos(t_list *stack)
     }
     return (min_pos);
 }
+
+/**********************************************************************
+ * Helper function to get max of 2 values
+ **********************************************************************/
+int ft_max(int a, int b)
+{
+    if (a > b)
+        return (a);
+    else
+        return (b);
+}
