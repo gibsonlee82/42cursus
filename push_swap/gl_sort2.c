@@ -62,8 +62,6 @@ void gl_sort2(t_list **a, t_list **b)
     while (ft_lstsize(*a) > 3)
         push_to_b_sorted(a, b);
     sort_three(a);
-    push_back_to_a(a, b);
-    // while (ft_lstsize(*b) > 0)
-    //     push_back_to_a_sorted(a, b);
+    push_back_to_a_sorted(a, b);
     final_rotate_a(a);
 }
