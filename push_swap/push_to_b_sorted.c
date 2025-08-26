@@ -50,55 +50,6 @@ static int get_target_position(t_list *b, int val)
 }
 
 /**********************************************************************
- * Calculates the minimal total moves needed to push element at
- * position apos in A to the correct position in B, considering
- * simultaneous rotations (rr) or reverse rotations (rrr).
- * - a: Stack A
- * - b: Stack B
- * - apos: Position in A
- * Return: Minimal move count (int)
- **********************************************************************/
-static int compute_cost(t_list *a, t_list *b, int apos, int *cost_a, int *cost_b)
-{
-    int size_a;
-    int size_b;
-    int val;
-    int bpos;
-
-    size_a = ft_lstsize(a);
-    size_b = ft_lstsize(b);
-    if (apos <= size_a / 2)
-        *cost_a = apos;
-    else
-        *cost_a = apos - size_a;
-    val = ((t_data *)ft_lstget(a, apos)->content)->value;
-    bpos = get_target_position(b, val);
-    if (bpos <= size_b / 2)
-        *cost_b = bpos;
-    else
-        *cost_b = bpos - size_b;
-    if ((*cost_a > 0 && *cost_b > 0) || (*cost_a < 0 && *cost_b < 0))
-        return (ft_max(abs(*cost_a), abs(*cost_b)));
-    else
-        return (abs(*cost_a) + abs(*cost_b));
-}
-
-/**********************************************************************
- * Helper function to update index and cost of cheapest move
- **********************************************************************/
-static void update_cheapest(int cost, int i, int cost_a, int cost_b,
-    int *min_cost, int *cheapest_index, int *best_cost_a, int *best_cost_b)
-{
-    if (cost < *min_cost)
-    {
-        *min_cost = cost;
-        *cheapest_index = i;
-        *best_cost_a = cost_a;
-        *best_cost_b = cost_b;
-    }
-}
-
-/**********************************************************************
  * Scans A to find the element with the minimal move cost to B.
  * Accounts for simultaneous rotations (rr/rrr).
  * - a: Stack A
@@ -123,14 +74,14 @@ static int find_cheapest(t_list *a, t_list *b, int *best_cost_a, int *best_cost_
     *best_cost_b = 0;
     while (tmp)
     {
-        cost = compute_cost(a, b, i, &cost_a, &cost_b);
-        if (cost < min_cost)
-            update_cheapest(cost, i, cost_a, cost_b, 
-                &min_cost, &cheapest_index, best_cost_a, best_cost_b);
+        //cost = compute_cost_for_b(a, b, i, &cost_a, &cost_b);
+        cost = compute_cost(a, b, i, &cost_a, &cost_b, get_target_position);
+        update_if_cheaper(cost, i, cost_a, cost_b, 
+            &min_cost, &cheapest_index, best_cost_a, best_cost_b);
         tmp = tmp->next;
         i++;
     }
-    return cheapest_index;
+    return (cheapest_index);
 }
 
 /**********************************************************************

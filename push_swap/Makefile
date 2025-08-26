@@ -10,6 +10,7 @@ SRC =	execute_rotations.c \
 		push_back_to_a_sorted.c \
 		push_swap.c \
 		push_to_b_sorted.c \
+		sort_three.c \
 		sort_utils.c \
 		utils.c
 

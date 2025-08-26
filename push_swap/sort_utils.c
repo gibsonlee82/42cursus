@@ -12,70 +12,6 @@
 #include "push_swap.h"
 
 /**********************************************************************
- * get_top_three_indices: Retrieves the indices of the top three elements.
- * - a: Pointer to the start of the stack.
- * - first, second, third: Pointers to integers to store the indices.
- **********************************************************************/
-static void	get_top3values(t_list *a, int *first, int *second, int *third)
-{
-	t_data	*data;
-
-	data = a->content;
-	*first = data->value;
-	data = a->next->content;
-	*second = data->value;
-	data = a->next->next->content;
-	*third = data->value;
-}
-
-/**********************************************************************
- * Sorts a stack of exactly three elements in ascending order.
- * - a: Pointer to the stack containing three elements.
- *
- * This function:
- * - Retrieves the index values of the top three elements.
- * - Applies the minimal sequence of operations (sa, ra, rra) to sort them.
- * - Covers all possible permutations of three elements:
- *     1. first > second < third, first < third: sa
- *        Example: 2 1 3 -> sa -> 1 2 3
- *     2. first > second > third: sa + rra
- *        Example: 3 2 1 -> sa -> 2 3 1 -> rra -> 1 2 3
- *     3. first > second < third, first > third: ra
- *        Example: 3 1 2 -> ra -> 1 2 3
- *     4. first < second > third, first > third: rra
- *        Example: 2 3 1 -> rra -> 1 2 3
- *     5. first < second > third, first < third: sa + ra
- *        Example: 1 3 2 -> sa -> 3 1 2 -> ra -> 1 2 3
- *     6. first < second < third, no action required
- *        Example: 1 2 3
- * Assumes the stack contains exactly three elements.
-**********************************************************************/
-void	sort_three(t_list **a)
-{
-	int	first;
-	int	second;
-	int	third;
-
-	get_top3values(*a, &first, &second, &third);
-	if (first > second && second < third && first < third)
-		sa(a);
-	else if (first > second && second > third)
-	{
-		sa(a);
-		rra(a);
-	}
-	else if (first > second && second < third && first > third)
-		ra(a);
-	else if (first < second && second > third && first > third)
-		rra(a);
-	else if (first < second && second > third && first < third)
-	{
-		sa(a);
-		ra(a);
-	}
-}
-
-/**********************************************************************
  * Checks if the stack is sorted in ascending order.
  * - a: Pointer to the stack to be checked.
  *
@@ -150,4 +86,55 @@ int ft_max(int a, int b)
         return (a);
     else
         return (b);
+}
+
+/**********************************************************************
+ * Helper function to update the cheapest move.
+ **********************************************************************/
+void update_if_cheaper(int cost, int i, int cost_a, int cost_b,
+    int *min_cost, int *cheapest, int *best_cost_a, int *best_cost_b)
+{
+    if (cost < *min_cost)
+    {
+        *min_cost = cost;
+        *cheapest = i;
+        *best_cost_a = cost_a;
+        *best_cost_b = cost_b;
+    }
+}
+
+/**********************************************************************
+ * Computes the cost of moving an element from one stack to another, 
+ *	depending on direction.
+ *
+ * Returns: combined cost for the move.
+ **********************************************************************/
+int compute_cost(t_list *src, t_list *dst, int pos, int *cost_src,
+    int *cost_dst, int (*get_pos_fn)(t_list *, int))
+{
+    int size_src;
+    int size_dst;
+    int val;
+    int dst_pos;
+
+    size_src = ft_lstsize(src);
+    size_dst = ft_lstsize(dst);
+
+    val = ((t_data *)ft_lstget(src, pos)->content)->value;
+    dst_pos = get_pos_fn(dst, val);
+
+    if (pos <= size_src / 2)
+        *cost_src = pos;
+    else
+        *cost_src = pos - size_src;
+
+    if (dst_pos <= size_dst / 2)
+        *cost_dst = dst_pos;
+    else
+        *cost_dst = dst_pos - size_dst;
+
+    if ((*cost_src > 0 && *cost_dst > 0) || (*cost_src < 0 && *cost_dst < 0))
+        return ft_max(abs(*cost_src), abs(*cost_dst));
+    else
+        return abs(*cost_src) + abs(*cost_dst);
 }
