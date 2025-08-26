@@ -56,32 +56,29 @@ static int get_target_position(t_list *b, int val)
  * - b: Stack B
  * Return: Index of the cheapest element to move
  **********************************************************************/
-static int find_cheapest(t_list *a, t_list *b, int *best_cost_a, int *best_cost_b)
+static t_cost find_cheapest_for_b(t_list *a, t_list *b)
 {
     int i;
     int cheapest_index;
-    int min_cost;
-    int cost_a;
-    int cost_b;
-    int cost;
+    t_cost curr_cost;
+    t_cost min_cost;
+    t_stacks stacks;
     t_list *tmp;
 
     i = 0;
     cheapest_index = 0;
-    min_cost = INT_MAX;
+    min_cost.total = INT_MAX;
     tmp = a;
-    *best_cost_a = 0;
-    *best_cost_b = 0;
+    stacks.src = a;
+    stacks.dst = b;
     while (tmp)
     {
-        //cost = compute_cost_for_b(a, b, i, &cost_a, &cost_b);
-        cost = compute_cost(a, b, i, &cost_a, &cost_b, get_target_position);
-        update_if_cheaper(cost, i, cost_a, cost_b, 
-            &min_cost, &cheapest_index, best_cost_a, best_cost_b);
+        curr_cost = compute_cost(stacks, i, get_target_position);
+        update_if_cheaper(curr_cost, i, &cheapest_index, &min_cost);
         tmp = tmp->next;
         i++;
     }
-    return (cheapest_index);
+    return (min_cost);
 }
 
 /**********************************************************************
@@ -91,10 +88,9 @@ static int find_cheapest(t_list *a, t_list *b, int *best_cost_a, int *best_cost_
  **********************************************************************/
 void push_to_b_sorted(t_list **a, t_list **b)
 {
-    int cost_a;
-    int cost_b;
+    t_cost  cost;
 
-    find_cheapest(*a, *b, &cost_a, &cost_b);
-    execute_rotations(a, b, cost_a, cost_b);
+    cost = find_cheapest_for_b(*a, *b);
+    execute_rotations(a, b, cost.src, cost.dst);
     pb(a, b);
 }

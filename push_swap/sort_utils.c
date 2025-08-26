@@ -91,15 +91,14 @@ int ft_max(int a, int b)
 /**********************************************************************
  * Helper function to update the cheapest move.
  **********************************************************************/
-void update_if_cheaper(int cost, int i, int cost_a, int cost_b,
-    int *min_cost, int *cheapest, int *best_cost_a, int *best_cost_b)
+void update_if_cheaper(t_cost curr_cost, int i, int *cheapest, t_cost *min_cost)
 {
-    if (cost < *min_cost)
+    if (curr_cost.total < (*min_cost).total)
     {
-        *min_cost = cost;
+        (*min_cost).total = curr_cost.total;
         *cheapest = i;
-        *best_cost_a = cost_a;
-        *best_cost_b = cost_b;
+        (*min_cost).src = curr_cost.src;
+        (*min_cost).dst = curr_cost.dst;
     }
 }
 
@@ -109,32 +108,29 @@ void update_if_cheaper(int cost, int i, int cost_a, int cost_b,
  *
  * Returns: combined cost for the move.
  **********************************************************************/
-int compute_cost(t_list *src, t_list *dst, int pos, int *cost_src,
-    int *cost_dst, int (*get_pos_fn)(t_list *, int))
+t_cost compute_cost(t_stacks stacks, int pos, int (*get_pos_fn)(t_list *, int))
 {
-    int size_src;
-    int size_dst;
-    int val;
-    int dst_pos;
+	int size_src;
+	int size_dst;
+	int val;
+	int dst_pos;
+	t_cost	cost;
 
-    size_src = ft_lstsize(src);
-    size_dst = ft_lstsize(dst);
-
-    val = ((t_data *)ft_lstget(src, pos)->content)->value;
-    dst_pos = get_pos_fn(dst, val);
-
-    if (pos <= size_src / 2)
-        *cost_src = pos;
-    else
-        *cost_src = pos - size_src;
-
-    if (dst_pos <= size_dst / 2)
-        *cost_dst = dst_pos;
-    else
-        *cost_dst = dst_pos - size_dst;
-
-    if ((*cost_src > 0 && *cost_dst > 0) || (*cost_src < 0 && *cost_dst < 0))
-        return ft_max(abs(*cost_src), abs(*cost_dst));
-    else
-        return abs(*cost_src) + abs(*cost_dst);
+	size_src = ft_lstsize(stacks.src);
+	size_dst = ft_lstsize(stacks.dst);
+	val = ((t_data *)ft_lstget(stacks.src, pos)->content)->value;
+	dst_pos = get_pos_fn(stacks.dst, val);
+	if (pos <= size_src / 2)
+		cost.src = pos;
+	else
+		cost.src = pos - size_src;
+	if (dst_pos <= size_dst / 2)
+		cost.dst = dst_pos;
+	else
+		cost.dst = dst_pos - size_dst;
+	if ((cost.src > 0 && cost.dst > 0) || (cost.src < 0 && cost.dst < 0))
+		cost.total = ft_max(abs(cost.src), abs(cost.dst));
+	else
+		cost.total = abs(cost.src) + abs(cost.dst);
+	return (cost);
 }

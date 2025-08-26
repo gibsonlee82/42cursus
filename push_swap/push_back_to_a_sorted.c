@@ -112,32 +112,30 @@ static int get_insert_position(t_list *a, int val)
  * find_cheapest_for_a:
  *  Finds B element with minimal moves to A.
  **********************************************************************/
-static int find_cheapest_for_a(t_list *b, t_list *a,
-    int *best_cost_a, int *best_cost_b)
+static t_cost find_cheapest_for_a(t_list *b, t_list *a)
 {
     int i;
     int cheapest_index;
-    int min_cost;
-    int cost_a;
-    int cost_b;
-    int cost;
+    t_cost curr_cost;
+    t_cost min_cost;
+    t_stacks stacks;
+    t_list *tmp;
 
     i = 0;
     cheapest_index = 0;
-    min_cost = INT_MAX;
-    t_list *tmp = b;
-    *best_cost_a = 0;
-    *best_cost_b = 0;
+    min_cost.total = INT_MAX;
+    curr_cost.total = 0;
+    stacks.src = b;
+    stacks.dst = a;
+    tmp = b;
     while (tmp)
     {
-        //cost = compute_cost_for_a(a, b, i, &cost_a, &cost_b);
-        cost = compute_cost(b, a, i, &cost_b, &cost_a, get_insert_position);
-        update_if_cheaper(cost, i, cost_a, cost_b, 
-            &min_cost, &cheapest_index, best_cost_a, best_cost_b);
+        curr_cost = compute_cost(stacks, i, get_insert_position);
+        update_if_cheaper(curr_cost, i, &cheapest_index, &min_cost);
         tmp = tmp->next;
         i++;
     }
-    return (cheapest_index);
+    return (min_cost);
 }
 
 /**********************************************************************
@@ -146,13 +144,12 @@ static int find_cheapest_for_a(t_list *b, t_list *a,
  **********************************************************************/
 void push_back_to_a_sorted(t_list **a, t_list **b)
 {
-    int cost_a;
-    int cost_b;
+    t_cost  cost;
 
     while (*b)
     {
-        find_cheapest_for_a(*b, *a, &cost_a, &cost_b);
-        execute_rotations(a, b, cost_a, cost_b);
+        cost = find_cheapest_for_a(*b, *a);
+        execute_rotations(a, b, cost.dst, cost.src);
         pa(a, b);
     }
-}
+} 

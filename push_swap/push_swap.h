@@ -34,6 +34,19 @@ typedef struct s_data
 	int	index;
 }	t_data;
 
+typedef struct s_cost
+{
+    int src;
+    int dst;
+	int	total;
+}   t_cost;
+
+typedef struct s_stacks
+{
+    t_list *src;
+    t_list *dst;
+}   t_stacks;
+
 // Parsing
 void	free_split(char **arr);
 void	parse_args(int argc, char **argv, t_list **a);
@@ -56,8 +69,7 @@ void	sort_three(t_list **a);
 t_list	*ft_lstget(t_list *lst, int index);
 int		find_min_value_pos(t_list *stack);
 int		ft_max(int a, int b);
-int 	compute_cost(t_list *src, t_list *dst, int pos, int *cost_src,
-    		int *cost_dst, int (*get_pos_fn)(t_list *, int));
+t_cost	compute_cost(t_stacks stacks, int pos, int (*get_pos_fn)(t_list *, int));
 
 // Sorting algo
 void	gl_sort2(t_list **a, t_list **b);
@@ -65,8 +77,7 @@ void	push_back_to_a(t_list **a, t_list **b);
 void	push_back_to_a_sorted(t_list **a, t_list **b);
 void	push_to_b_sorted(t_list **a, t_list **b);
 void	execute_rotations(t_list **a, t_list **b, int cost_a, int cost_b);
-void 	update_if_cheaper(int cost, int i, int cost_a, int cost_b,
-			int *min_cost, int *cheapest, int *best_cost_a, int *best_cost_b);
+void	update_if_cheaper(t_cost curr_cost, int i, int *cheapest, t_cost *min_cost);
 
 // Utils
 int		is_sorted(t_list *a);
