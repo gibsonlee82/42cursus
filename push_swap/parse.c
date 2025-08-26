@@ -99,22 +99,20 @@ static void	add_number(t_list **a, char **split, char *str)
 	t_data	*new_data;
 
 	if (!is_valid_number(str))
-		error_exit(NULL, NULL);
-	num = parse_int_safe(str);
-	if (is_duplicate(*a, num))
 		error_exit(a, split);
+	num = parse_int_safe(str);
 	if (num < INT_MIN || num > INT_MAX || is_duplicate(*a, num))
-		error_exit(NULL, NULL);
+		error_exit(a, split);
 	new_data = malloc(sizeof(t_data));
 	if (!new_data)
-		error_exit(NULL, NULL);
+		error_exit(a, split);
 	new_data->value = (int)num;
 	new_data->index = -1;
 	new_node = ft_lstnew(new_data);
 	if (!new_node)
 	{
 		free(new_data);
-		error_exit(&new_node, split);
+		error_exit(a, split);
 	}
 	ft_lstadd_back(a, new_node);
 }

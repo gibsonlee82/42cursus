@@ -7,7 +7,6 @@ SRC =	execute_rotations.c \
 		ops_rot.c \
 		ops_swap.c \
 		parse.c \
-		push_back_to_a.c \
 		push_back_to_a_sorted.c \
 		push_swap.c \
 		push_to_b_sorted.c \
