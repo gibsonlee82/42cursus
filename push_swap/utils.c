@@ -6,7 +6,7 @@
 /*   By: giblee <abc@abc.com>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/07 10:50:33 by giblee            #+#    #+#             */
-/*   Updated: 2025/08/19 11:06:43 by giblee           ###   ########.fr       */
+/*   Updated: 2025/08/27 11:07:53 by giblee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "push_swap.h"
@@ -85,16 +85,17 @@ void	error_exit(t_list **stack, char **split)
  *  - index: Zero-based index
  * Return: Pointer to the nth node, or NULL if out of range.
  ***********************************************************************/
-t_list *ft_lstget(t_list *lst, int index)
+t_list	*ft_lstget(t_list *lst, int index)
 {
-    int i = 0;
+	int	i;
 
-    while (lst && i < index)
-    {
-        lst = lst->next;
-        i++;
-    }
-    return (lst);
+	i = 0;
+	while (lst && i < index)
+	{
+		lst = lst->next;
+		i++;
+	}
+	return (lst);
 }
 
 /**********************************************************************

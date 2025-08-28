@@ -6,7 +6,7 @@
 /*   By: giblee <abc@abc.com>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/07 10:00:33 by giblee            #+#    #+#             */
-/*   Updated: 2025/08/19 11:04:18 by giblee           ###   ########.fr       */
+/*   Updated: 2025/08/27 11:06:20 by giblee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef PUSH_SWAP_H
@@ -36,16 +36,16 @@ typedef struct s_data
 
 typedef struct s_cost
 {
-    int src;
-    int dst;
+	int	src;
+	int	dst;
 	int	total;
-}   t_cost;
+}	t_cost;
 
 typedef struct s_stacks
 {
-    t_list *src;
-    t_list *dst;
-}   t_stacks;
+	t_list	*src;
+	t_list	*dst;
+}	t_stacks;
 
 // Parsing
 void	free_split(char **arr);
@@ -69,7 +69,8 @@ void	sort_three(t_list **a);
 t_list	*ft_lstget(t_list *lst, int index);
 int		find_min_value_pos(t_list *stack);
 int		ft_max(int a, int b);
-t_cost	compute_cost(t_stacks stacks, int pos, int (*get_pos_fn)(t_list *, int));
+t_cost	compute_cost(t_stacks stacks, int pos,
+			int (*get_pos_fn)(t_list *, int));
 
 // Sorting algo
 void	gl_sort2(t_list **a, t_list **b);
@@ -77,7 +78,7 @@ void	push_back_to_a(t_list **a, t_list **b);
 void	push_back_to_a_sorted(t_list **a, t_list **b);
 void	push_to_b_sorted(t_list **a, t_list **b);
 void	execute_rotations(t_list **a, t_list **b, int cost_a, int cost_b);
-void	update_if_cheaper(t_cost curr_cost, int i, int *cheapest, t_cost *min_cost);
+void	update_if_cheaper(t_cost curr_cost, t_cost *min_cost);
 
 // Utils
 int		is_sorted(t_list *a);

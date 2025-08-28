@@ -6,7 +6,7 @@
 /*   By: giblee <abc@abc.com>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 16:50:33 by giblee            #+#    #+#             */
-/*   Updated: 2025/08/21 11:04:51 by giblee           ###   ########.fr       */
+/*   Updated: 2025/08/27 13:08:42 by giblee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,31 +23,32 @@
  * Return:
  *   Size of stack A
  **********************************************************************/
-static int get_min_max_info(t_list *a, int *min_val, int *max_val, int *max_pos)
+static int	get_min_max_info(t_list *a, int *min_val, int *max_val,
+				int *max_pos)
 {
-    int     pos;
-    int     curr;
-    t_list  *tmp;
+	int		pos;
+	int		curr;
+	t_list	*tmp;
 
-    pos = 0;
-    *min_val = INT_MAX;
-    *max_val = INT_MIN;
-    *max_pos = 0;
-    tmp = a;
-    while (tmp)
-    {
-        curr = ((t_data *)tmp->content)->value;
-        if (curr < *min_val)
-            *min_val = curr;
-        if (curr > *max_val)
-        {
-            *max_val = curr;
-            *max_pos = pos;
-        }
-        tmp = tmp->next;
-        pos++;
-    }
-    return (pos);
+	pos = 0;
+	*min_val = INT_MAX;
+	*max_val = INT_MIN;
+	*max_pos = 0;
+	tmp = a;
+	while (tmp)
+	{
+		curr = ((t_data *)tmp->content)->value;
+		if (curr < *min_val)
+			*min_val = curr;
+		if (curr > *max_val)
+		{
+			*max_val = curr;
+			*max_pos = pos;
+		}
+		tmp = tmp->next;
+		pos++;
+	}
+	return (pos);
 }
 
 /**********************************************************************
@@ -59,29 +60,29 @@ static int get_min_max_info(t_list *a, int *min_val, int *max_val, int *max_pos)
  * Return:
  *   Position where val should be inserted, or 0 if not found
  **********************************************************************/
-static int find_between_position(t_list *a, int val)
+static int	find_between_position(t_list *a, int val)
 {
-    int     pos;
-    int     curr;
-    int     next;
-    t_list  *tmp;
+	int		pos;
+	int		curr;
+	int		next;
+	t_list	*tmp;
 
-    pos = 0;
-    tmp = a;
-    while (tmp)
-    {
-        curr = ((t_data *)tmp->content)->value;
-        if (tmp->next)
-            next = ((t_data *)tmp->next->content)->value;
-        else
-            next = ((t_data *)a->content)->value;
-        if ((curr < next && curr < val && val < next) ||
-            (curr > next && (val > curr || val < next)))
-            return (pos + 1);
-        tmp = tmp->next;
-        pos++;
-    }
-    return (0);
+	pos = 0;
+	tmp = a;
+	while (tmp)
+	{
+		curr = ((t_data *)tmp->content)->value;
+		if (tmp->next)
+			next = ((t_data *)tmp->next->content)->value;
+		else
+			next = ((t_data *)a->content)->value;
+		if ((curr < next && curr < val && val < next)
+			|| (curr > next && (val > curr || val < next)))
+			return (pos + 1);
+		tmp = tmp->next;
+		pos++;
+	}
+	return (0);
 }
 
 /**********************************************************************
@@ -93,63 +94,61 @@ static int find_between_position(t_list *a, int val)
  * Return:
  *   Index in A where 'val' should be inserted
  **********************************************************************/
-static int get_insert_position(t_list *a, int val)
+static int	get_insert_position(t_list *a, int val)
 {
-    int min_val;
-    int max_val;
-    int max_pos;
-    int size;
+	int	min_val;
+	int	max_val;
+	int	max_pos;
+	int	size;
 
-    if (!a)
-        return (0);
-    size = get_min_max_info(a, &min_val, &max_val, &max_pos);
-    if (val < min_val || val > max_val)
-        return ((max_pos + 1) % size);
-    return (find_between_position(a, val));
+	if (!a)
+		return (0);
+	size = get_min_max_info(a, &min_val, &max_val, &max_pos);
+	if (val < min_val || val > max_val)
+		return ((max_pos + 1) % size);
+	return (find_between_position(a, val));
 }
 
 /**********************************************************************
  * find_cheapest_for_a:
  *  Finds B element with minimal moves to A.
  **********************************************************************/
-static t_cost find_cheapest_for_a(t_list *b, t_list *a)
+static t_cost	find_cheapest_for_a(t_list *b, t_list *a)
 {
-    int i;
-    int cheapest_index;
-    t_cost curr_cost;
-    t_cost min_cost;
-    t_stacks stacks;
-    t_list *tmp;
+	int			i;
+	t_cost		curr_cost;
+	t_cost		min_cost;
+	t_stacks	stacks;
+	t_list		*tmp;
 
-    i = 0;
-    cheapest_index = 0;
-    min_cost.total = INT_MAX;
-    curr_cost.total = 0;
-    stacks.src = b;
-    stacks.dst = a;
-    tmp = b;
-    while (tmp)
-    {
-        curr_cost = compute_cost(stacks, i, get_insert_position);
-        update_if_cheaper(curr_cost, i, &cheapest_index, &min_cost);
-        tmp = tmp->next;
-        i++;
-    }
-    return (min_cost);
+	i = 0;
+	min_cost.total = INT_MAX;
+	curr_cost.total = 0;
+	stacks.src = b;
+	stacks.dst = a;
+	tmp = b;
+	while (tmp)
+	{
+		curr_cost = compute_cost(stacks, i, get_insert_position);
+		update_if_cheaper(curr_cost, &min_cost);
+		tmp = tmp->next;
+		i++;
+	}
+	return (min_cost);
 }
 
 /**********************************************************************
  * push_back_to_a_sorted:
  *  Push all elements from B to A in ascending order with minimal moves.
  **********************************************************************/
-void push_back_to_a_sorted(t_list **a, t_list **b)
+void	push_back_to_a_sorted(t_list **a, t_list **b)
 {
-    t_cost  cost;
+	t_cost	cost;
 
-    while (*b)
-    {
-        cost = find_cheapest_for_a(*b, *a);
-        execute_rotations(a, b, cost.dst, cost.src);
-        pa(a, b);
-    }
-} 
+	while (*b)
+	{
+		cost = find_cheapest_for_a(*b, *a);
+		execute_rotations(a, b, cost.dst, cost.src);
+		pa(a, b);
+	}
+}

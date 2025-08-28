@@ -51,7 +51,7 @@ void	free_split(char **arr)
  * - Only valid, bounded integers are returned.
  * - Malformed or unsafe inputs trigger a controlled exit.
  **********************************************************************/
-static int	parse_int_safe(const char *str)
+static int	parse_int_safe(t_list **a, char **split, const char *str)
 {
 	long	result;
 	int		sign;
@@ -61,19 +61,19 @@ static int	parse_int_safe(const char *str)
 	sign = 1;
 	i = 0;
 	if (!str || !*str)
-		error_exit(NULL, NULL);
+		error_exit(a, split);
 	if (str[i] == '-' || str[i] == '+')
 		if (str[i++] == '-')
 			sign = -1;
 	while (str[i])
 	{
 		if (str[i] < '0' || str[i] > '9')
-			error_exit(NULL, NULL);
+			error_exit(a, split);
 		result = result * 10 + (str[i] - '0');
 		if (sign == 1 && result > INT_MAX)
-			error_exit(NULL, NULL);
+			error_exit(a, split);
 		if (sign == -1 && (sign * result) < INT_MIN)
-			error_exit(NULL, NULL);
+			error_exit(a, split);
 		i++;
 	}
 	return ((int)(sign * result));
@@ -100,7 +100,7 @@ static void	add_number(t_list **a, char **split, char *str)
 
 	if (!is_valid_number(str))
 		error_exit(a, split);
-	num = parse_int_safe(str);
+	num = parse_int_safe(a, split, str);
 	if (num < INT_MIN || num > INT_MAX || is_duplicate(*a, num))
 		error_exit(a, split);
 	new_data = malloc(sizeof(t_data));
@@ -135,7 +135,7 @@ static void	parse_string(t_list **a, char *arg)
 
 	nums = ft_split(arg, ' ');
 	if (!nums)
-		error_exit(NULL, NULL);
+		error_exit(NULL, nums);
 	j = 0;
 	while (nums[j])
 	{

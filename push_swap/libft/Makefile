@@ -47,7 +47,7 @@ SRCS = ft_isalpha.c \
 
 OBJS = ${SRCS:.c=.o}
 
-%.o: %.c
+%.o: %.c libft.h
 	${COMPILER} ${CFLAGS} -c $< -o $@
 
 ${NAME}: ${OBJS}

@@ -6,7 +6,7 @@
 /*   By: giblee <abc@abc.com>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 16:50:33 by giblee            #+#    #+#             */
-/*   Updated: 2025/08/22 11:04:51 by giblee           ###   ########.fr       */
+/*   Updated: 2025/08/27 12:47:29 by giblee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,23 +17,23 @@
  *  Uses the minimal number of rotations (ra or rra).
  *    - a: Stack A (sorted but possibly rotated)
  **********************************************************************/
-void final_rotate_a(t_list **a)
+void	final_rotate_a(t_list **a)
 {
-    int min_pos;
-    int rev;
-    
-    min_pos = find_min_value_pos(*a);
-    if (min_pos <= ft_lstsize(*a) / 2)
-    {
-        while (min_pos--)
-            ra(a);
-    }
-    else
-    {
-        rev = ft_lstsize(*a) - min_pos;
-        while (rev--)
-            rra(a);
-    }
+	int	min_pos;
+	int	rev;
+
+	min_pos = find_min_value_pos(*a);
+	if (min_pos <= ft_lstsize(*a) / 2)
+	{
+		while (min_pos--)
+			ra(a);
+	}
+	else
+	{
+		rev = ft_lstsize(*a) - min_pos;
+		while (rev--)
+			rra(a);
+	}
 }
 
 /**********************************************************************
@@ -50,18 +50,18 @@ void final_rotate_a(t_list **a)
  *           ascending order.
  *    5. Rotate A so smallest element is at the top
  **********************************************************************/
-void gl_sort2(t_list **a, t_list **b)
+void	gl_sort2(t_list **a, t_list **b)
 {
-    if (ft_lstsize(*a) <= 3)
-    {
-        sort_three(a);
-        return ;
-    }
-    pb(a, b);
-    pb(a, b);
-    while (ft_lstsize(*a) > 3)
-        push_to_b_sorted(a, b);
-    sort_three(a);
-    push_back_to_a_sorted(a, b);
-    final_rotate_a(a);
+	if (ft_lstsize(*a) <= 3)
+	{
+		sort_three(a);
+		return ;
+	}
+	pb(a, b);
+	pb(a, b);
+	while (ft_lstsize(*a) > 3)
+		push_to_b_sorted(a, b);
+	sort_three(a);
+	push_back_to_a_sorted(a, b);
+	final_rotate_a(a);
 }

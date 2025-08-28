@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sort_small.c                                       :+:      :+:    :+:   */
+/*   sort_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: giblee <abc@abc.com>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/07 10:50:33 by giblee            #+#    #+#             */
-/*   Updated: 2025/08/19 11:06:25 by giblee           ###   ########.fr       */
+/*   Updated: 2025/08/27 11:12:45 by giblee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "push_swap.h"
@@ -49,57 +49,54 @@ int	is_sorted(t_list *a)
  *  Returns:
  *    - The 0-based position of the element with the smallest index
  **********************************************************************/
-int find_min_value_pos(t_list *stack)
+int	find_min_value_pos(t_list *stack)
 {
-    int min_value;
-    int pos;
-    int min_pos;
-    t_list *tmp;
+	int		min_value;
+	int		pos;
+	int		min_pos;
+	t_list	*tmp;
 
-    if (!stack)
-        return (-1);
-
-    tmp = stack;
-    min_value = ((t_data *)tmp->content)->value;
-    pos = 0;
-    min_pos = 0;
-
-    while (tmp)
-    {
-        if (((t_data *)tmp->content)->value < min_value)
-        {
-            min_value = ((t_data *)tmp->content)->value;
-            min_pos = pos;
-        }
-        tmp = tmp->next;
-        pos++;
-    }
-    return (min_pos);
+	if (!stack)
+		return (-1);
+	tmp = stack;
+	min_value = ((t_data *)tmp->content)->value;
+	pos = 0;
+	min_pos = 0;
+	while (tmp)
+	{
+		if (((t_data *)tmp->content)->value < min_value)
+		{
+			min_value = ((t_data *)tmp->content)->value;
+			min_pos = pos;
+		}
+		tmp = tmp->next;
+		pos++;
+	}
+	return (min_pos);
 }
 
 /**********************************************************************
  * Helper function to get max of 2 values
  **********************************************************************/
-int ft_max(int a, int b)
+int	ft_max(int a, int b)
 {
-    if (a > b)
-        return (a);
-    else
-        return (b);
+	if (a > b)
+		return (a);
+	else
+		return (b);
 }
 
 /**********************************************************************
  * Helper function to update the cheapest move.
  **********************************************************************/
-void update_if_cheaper(t_cost curr_cost, int i, int *cheapest, t_cost *min_cost)
+void	update_if_cheaper(t_cost curr_cost, t_cost *min_cost)
 {
-    if (curr_cost.total < (*min_cost).total)
-    {
-        (*min_cost).total = curr_cost.total;
-        *cheapest = i;
-        (*min_cost).src = curr_cost.src;
-        (*min_cost).dst = curr_cost.dst;
-    }
+	if (curr_cost.total < (*min_cost).total)
+	{
+		(*min_cost).total = curr_cost.total;
+		(*min_cost).src = curr_cost.src;
+		(*min_cost).dst = curr_cost.dst;
+	}
 }
 
 /**********************************************************************
@@ -108,12 +105,12 @@ void update_if_cheaper(t_cost curr_cost, int i, int *cheapest, t_cost *min_cost)
  *
  * Returns: combined cost for the move.
  **********************************************************************/
-t_cost compute_cost(t_stacks stacks, int pos, int (*get_pos_fn)(t_list *, int))
+t_cost	compute_cost(t_stacks stacks, int pos, int (*get_pos_fn)(t_list *, int))
 {
-	int size_src;
-	int size_dst;
-	int val;
-	int dst_pos;
+	int		size_src;
+	int		size_dst;
+	int		val;
+	int		dst_pos;
 	t_cost	cost;
 
 	size_src = ft_lstsize(stacks.src);
