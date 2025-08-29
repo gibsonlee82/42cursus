@@ -53,57 +53,6 @@ int	ft_count_words(const char *s, char delimiter)
 	return (count);
 }
 
-// char	**ft_split_redirect(char **result, const char *str, char c)
-// {
-// 	const char	*start;
-// 	int			len;
-// 	int			num_string;
-
-// 	start = str;
-// 	num_string = 0;
-// 	len = 0;
-// 	while (*str)
-// 	{
-// 		if (*str == c)
-// 		{
-// 			if (len > 0)
-// 				result[num_string++] = ft_strdupword(start, len);
-// 			len = 0;
-// 			start = str + 1;
-// 		}
-// 		else
-// 			len++;
-// 		str++;
-// 	}
-// 	if (len > 0)
-// 		result[num_string++] = ft_strdupword(start, len);
-// 	result[num_string] = NULL;
-// 	return (result);
-// }
-
-// // Allocates memory (using malloc(3)) and returns an array of strings, 
-// // obtained by splitting 's' using the character 'c' as a delimiter.
-// char	**ft_split(char const *s, char c)
-// {
-// 	char	**result;
-
-// 	// if (!s)
-// 	// 	return (NULL);
-// 	// if (c == '\0')
-// 	// {
-// 	// 	result = malloc(sizeof(char *) * 2);
-// 	// 	if (!result)
-// 	// 		return (NULL);
-// 	// 	result[0] = (char *) ft_strdup(s);
-// 	// 	result[1] = (NULL);
-// 	// 	return (result);
-// 	// }
-// 	result = ft_calloc(sizeof(char *), ft_count_words(s, c) + 1);
-// 	if (result == NULL)
-// 		return (NULL);
-// 	return (ft_split_redirect(result, s, c));
-// }
-
 char	**ft_free(char **strs, int count)
 {
 	int	i;
@@ -157,7 +106,7 @@ char	**ft_split(char const *s, char c)
 		else
 		{
 			result[j] = get_word(s, c, &i);
-			if (!result)
+			if (!result[j])
 				return (ft_free(result, j));
 			j++;
 		}

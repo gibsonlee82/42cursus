@@ -35,13 +35,7 @@ SRCS = ft_isalpha.c \
 	ft_putstr_fd.c \
 	ft_putendl_fd.c \
 	ft_putnbr_fd.c \
-	get_next_line.c \
-	get_next_line_utils.c \
-	ft_utils.c \
-	ft_printf.c \
-	ft_printf_utils.c
-	
-BSRCS =	ft_lstnew_bonus.c \
+	ft_lstnew_bonus.c \
 	ft_lstadd_front_bonus.c \
 	ft_lstsize_bonus.c \
 	ft_lstlast_bonus.c \
@@ -52,26 +46,21 @@ BSRCS =	ft_lstnew_bonus.c \
 	ft_lstmap_bonus.c
 
 OBJS = ${SRCS:.c=.o}
-BOBJS = ${BSRCS:.c=.o}
-HDR = libft.h
 
-all: $(NAME)
+%.o: %.c libft.h
+	${COMPILER} ${CFLAGS} -c $< -o $@
 
 ${NAME}: ${OBJS}
 	ar rcs ${NAME} ${OBJS}
 
-%.o: %.c ${HDR}
-	${COMPILER} ${CFLAGS} -c $< -o $@
-
-bonus:	$(OBJS) $(BOBJS)
-	ar rcs ${NAME} $(OBJS) $(BOBJS)
+all: $(NAME)
 
 clean:
-	rm -f $(OBJS) $(BOBJS)
+	rm -rf *.o
 
 fclean: clean
 	rm -f ${NAME}
 
 re: fclean all
 
-.PHONY: all clean fclean re bonus
+.PHONY: all clean fclean re

@@ -1,78 +1,35 @@
-# **************************************************************************** #
-#                                  MAKEFILE                                    #
-# **************************************************************************** #
+NAME = so_long
+CC = cc
+CFLAGS = -Wall -Wextra -Werror -I.
+SRCS = main.c utils.c map.c path.c render.c game.c events.c
+OBJS = $(SRCS:.c=.o)
+LIBFT = ./libft/libft.a
+MLX = ./mlx/libmlx.a
 
-# Project name
-NAME		= so_long
+%.o: %.c so_long.h
+	$(CC) $(CFLAGS) -c $< -o $@
 
-# Compiler and flags
-CC			= cc
-CFLAGS		= -Wall -Wextra -Werror
+$(NAME): $(OBJS) $(LIBFT) $(MLX)
+	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) $(MLX) -lXext -lX11 -lm -o $(NAME)
 
-# Directories
-SRC_DIR		= .
-OBJ_DIR		= objs
-LIBFT_DIR	= libft
+$(LIBFT):
+	$(MAKE) -C libft
 
-# Sources and Objects
-SRCS		= 	main.c \
-				map.c \
-				game.c \
-				render.c \
-				player.c \
-				hooks.c \
-				validate_format.c \
-				validate_path.c
-				
-OBJS		= $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
+$(MLX):
+	$(MAKE) -C mlx
 
-# Libft
-LIBFT		= $(LIBFT_DIR)/libft.a
-LIBFT_INC	= -I$(LIBFT_DIR)
-
-# MiniLibX (macOS) - change if using Linux
-# MLX_FLAGS	= -lmlx -framework OpenGL -framework AppKit
-MLX_DIR    = minilibx-linux
-MLX        = $(MLX_DIR)/libmlx.a
-MLX_FLAGS  = -L$(MLX_DIR) -lmlx -lXext -lX11 -lm -lbsd
-INCLUDES   = -I. -I$(MLX_DIR)
-
-# Includes
-INCLUDES	= -I. $(LIBFT_INC)
-
-# Default target
 all: $(NAME)
 
-# Compile final binary
-$(NAME): $(LIBFT) $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) $(MLX_FLAGS) -o $(NAME)
-
-# Create obj dir if not exists, then build .o
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
-	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
-
-# Make sure obj dir exists
-$(OBJ_DIR):
-	mkdir -p $(OBJ_DIR)
-
-# Build libft
-$(LIBFT):
-	make -C $(LIBFT_DIR)
-
-# Bonus rule
-bonus: all
-
-# Clean object files
 clean:
-	rm -rf $(OBJ_DIR)
-	make clean -C $(LIBFT_DIR)
+	rm -f $(OBJS)
+	$(MAKE) -C libft clean
+	$(MAKE) -C mlx clean
 
-# Clean everything
 fclean: clean
 	rm -f $(NAME)
-	make fclean -C $(LIBFT_DIR)
+	$(MAKE) -C libft fclean
+	$(MAKE) -C mlx clean
 
-# Rebuild
 re: fclean all
 
-.PHONY: all clean fclean re bonus
+.PHONY: all clean fclean re
