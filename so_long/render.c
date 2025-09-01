@@ -107,9 +107,9 @@ int	load_textures(t_game *g)
 {
 	load_img(g, &g->floor, "textures/floor.xpm");
 	load_img(g, &g->wall, "textures/wall.xpm");
-	load_img(g, &g->player, "textures/player.xpm");
+	load_img(g, &g->player, "textures/ghost.xpm");
 	load_img(g, &g->exit_img, "textures/exit.xpm");
-	load_img(g, &g->collect, "textures/collect.xpm");
+	load_img(g, &g->collect, "textures/pumpkim.xpm");
 	return (1);
 }
 

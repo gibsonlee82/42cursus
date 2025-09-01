@@ -1,1 +1,8 @@
+so_long
 maps/
+*.o
+libft/*.o
+libft/libft.a
+mlx/obj/
+tester1/
+tester2/
