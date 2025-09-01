@@ -19,48 +19,66 @@ void	error_exit(char *msg)
 	exit(1);
 }
 
-/* read whole file with read(2) only, return NUL-terminated heap string */
-char	*sl_read_all(int fd)
+static char *join_and_free(char *s1, const char *s2, size_t len)
 {
-	char	buf[1024];
-	char	*out;
-	char	*tmp;
-	ssize_t	r;
-	size_t	len;
-
-	out = ft_strdup("");
-	if (!out)
-		error_exit("malloc\n");
-	r = read(fd, buf, sizeof(buf));
-	while (r > 0)
-	{
-		tmp = out;
-		len = (size_t)r;
-		out = ft_strjoin(tmp, ft_substr(buf, 0, len));
-		free(tmp);
-		if (!out)
-			error_exit("malloc\n");
-		r = read(fd, buf, sizeof(buf));
-	}
-	if (r < 0)
-		error_exit("read\n");
-	return (out);
+    char *sub = ft_substr(s2, 0, len);
+    char *res = ft_strjoin(s1, sub);
+    free(s1);
+    free(sub);
+    if (!res)
+        error_exit("malloc\n");
+    return (res);
 }
 
-void	free_map(char **map, int height)
+char *sl_read_all(int fd)
 {
-	int	i;
+    char buf[1024];
+    char *out;
+    ssize_t r;
+	size_t i;
 
-	if (!map)
-		return ;
 	i = 0;
-	while (i < height)
-	{
-		if (map[i])
-			free(map[i]);
-		i++;
-	}
-	free(map);
+	while (i < 1024)
+    	buf[i++] = 0;
+
+	out = ft_strdup("");
+    if (!out)
+        error_exit("malloc\n");
+    r = read(fd, buf, sizeof(buf));
+    while (r > 0)
+    {
+        out = join_and_free(out, buf, (size_t)r);
+        r = read(fd, buf, sizeof(buf));
+    }
+    if (r < 0)
+        error_exit("read\n");
+    return (out);
+}
+
+// void	free_map(char **map, int height)
+// {
+// 	int	i;
+
+// 	if (!map)
+// 		return ;
+// 	i = 0;
+// 	while (i < height)
+// 	{
+// 		if (map[i])
+// 			free(map[i]);
+// 		i++;
+// 	}
+// 	free(map);
+// }
+void free_map(char **map)
+{
+    int	i;
+
+	i = 0;
+    if (!map) return;
+    while (map[i])
+        free(map[i++]);
+    free(map);
 }
 
 int	handle_resize(t_game *g)
@@ -71,4 +89,3 @@ int	handle_resize(t_game *g)
 	render_map(g);
 	return (0);
 }
-

@@ -115,29 +115,55 @@ static void	count_and_check_chars(t_game *g)
  * - path points to a valid file.
  * - sl_read_all() and ft_split() are implemented and handle memory.
  **********************************************************************/
-int	load_map(t_game *g, const char *path)
-{
-	int		fd;
-	char	*all;
-	char	**lines;
-	int		h;
+// int	load_map(t_game *g, const char *path)
+// {
+// 	int		fd;
+// 	char	*all;
+// 	char	**lines;
+// 	int		h;
 
-	fd = open(path, O_RDONLY);
-	if (fd < 0)
-		error_exit("open\n");
-	all = sl_read_all(fd);
-	close(fd);
-	lines = ft_split(all, '\n');
-	free(all);
-	if (!lines || !lines[0])
-		error_exit("empty map\n");
-	h = 0;
-	while (lines[h])
-		h++;
-	g->map = lines;
-	g->map_height = h;
-	g->map_width = (int)ft_strlen(lines[0]);
-	return (1);
+// 	fd = open(path, O_RDONLY);
+// 	if (fd < 0)
+// 		error_exit("open\n");
+// 	all = sl_read_all(fd);
+// 	close(fd);
+// 	lines = ft_split(all, '\n');
+// 	free(all);
+// 	if (!lines || !lines[0])
+// 		error_exit("empty map\n");
+// 	h = 0;
+// 	while (lines[h])
+// 		h++;
+// 	g->map = lines;
+// 	g->map_height = h;
+// 	g->map_width = (int)ft_strlen(lines[0]);
+// 	return (1);
+// }
+int load_map(t_game *g, const char *path)
+{
+    int fd = open(path, O_RDONLY);
+    char *all;
+    char **lines;
+    int h = 0;
+
+    if (fd < 0)
+        error_exit("open\n");
+    all = sl_read_all(fd);
+    close(fd);
+
+    lines = ft_split(all, '\n');
+    free(all);
+
+    if (!lines || !lines[0])
+        error_exit("empty map\n");
+
+    while (lines[h])
+        h++;
+
+    g->map = lines;
+    g->map_height = h;
+    g->map_width = (int)ft_strlen(lines[0]);
+    return 1;
 }
 
 /**********************************************************************

@@ -73,7 +73,8 @@ typedef struct s_game
 // utils
 void	error_exit(char *msg);
 char	*sl_read_all(int fd);
-void	free_map(char **map, int height);
+// void	free_map(char **map, int height);
+void	free_map(char **map);
 int	handle_resize(t_game *g);
 
 // map
