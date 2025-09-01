@@ -35,12 +35,8 @@ char *sl_read_all(int fd)
     char buf[1024];
     char *out;
     ssize_t r;
-	size_t i;
-
-	i = 0;
-	while (i < 1024)
-    	buf[i++] = 0;
-
+	
+	ft_bzero(buf, 1024);
 	out = ft_strdup("");
     if (!out)
         error_exit("malloc\n");
