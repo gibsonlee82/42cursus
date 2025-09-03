@@ -62,15 +62,15 @@ int	main(int argc, char **argv)
 	t_game	g;
 
 	if (argc != 2)
-		error_exit("usage: ./so_long file.ber\n");
+		error_exit("usage: ./so_long file.ber\n", &g);
 	init_game(&g);
 	if (ft_strncmp(argv[1] + (ft_strlen(argv[1]) - 4), ".ber", 4) != 0)
-		error_exit("need .ber\n");
+		error_exit("need .ber\n", &g);
 	load_map(&g, argv[1]);
 	validate_map(&g);
 	g.mlx = mlx_init();
 	if (!g.mlx)
-		error_exit("mlx init\n");
+		error_exit("mlx init\n", &g);
 	start_game(&g);
 	return (0);
 }

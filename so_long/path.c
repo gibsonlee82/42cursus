@@ -43,69 +43,6 @@ static void	flood(char **m, int x, int y, t_game *g)
 }
 
 /**********************************************************************
- * validate_path: Ensures all collectibles and exit are reachable.
- * - g: Pointer to the game state structure containing the map.
- *
- * This function:
- * - Creates a duplicate copy of the current map.
- * - Uses flood-fill starting from the player's position to mark reachable tiles.
- * - Counts how many collectibles ('C') are reachable.
- * - Checks if the exit ('E') is reachable.
- * - Frees the copied map after validation.
- * - Exits with error if not all collectibles are reachable or if exit is
- *   unreachable.
- *
- * Returns:
- * - 1 if the map is solvable.
- *
- * Assumes:
- * - g->map has been loaded and validated for shape and characters.
- * - g->player_x and g->player_y are set to the player's start position.
- **********************************************************************/
-// int	validate_path(t_game *g)
-// {
-// 	char	**cp;
-// 	int		y;
-// 	int		cf;
-// 	int		ef;
-// 	int		x;
-
-// 	cp = ft_calloc(g->map_height + 1, sizeof(char *));
-// 	if (!cp)
-// 		error_exit("malloc\n");
-// 	y = 0;
-// 	while (y < g->map_height)
-// 	{
-// 		cp[y] = ft_strdup(g->map[y]);
-// 		if (!cp[y])
-// 			error_exit("malloc\n");
-// 		y++;
-// 	}
-// 	flood(cp, g->player_x, g->player_y, g);
-// 	cf = 0;
-// 	ef = 0;
-// 	y = 0;
-// 	while (y < g->map_height)
-// 	{
-// 		x = 0;
-// 		while (x < g->map_width)
-// 		{
-// 			if (g->map[y][x] == 'C' && cp[y][x] == 'V')
-// 				cf++;
-// 			if (g->map[y][x] == 'E' && cp[y][x] == 'V')
-// 				ef = 1;
-// 			x++;
-// 		}
-// 		free(cp[y]);
-// 		y++;
-// 	}
-// 	free(cp);
-// 	if (cf != g->collectibles || ef == 0)
-// 		error_exit("unsolvable map\n");
-// 	return (1);
-// }
-
-/**********************************************************************
  * dup_map: Creates a deep copy of the current map.
  * - g: Pointer to the game state structure containing the map.
  *
@@ -129,13 +66,13 @@ static char	**dup_map(t_game *g)
 
 	cp = ft_calloc(g->map_height + 1, sizeof(char *));
 	if (!cp)
-		error_exit("malloc\n");
+		error_exit("malloc\n", g);
 	y = 0;
 	while (y < g->map_height)
 	{
 		cp[y] = ft_strdup(g->map[y]);
 		if (!cp[y])
-			error_exit("malloc\n");
+			error_exit("malloc\n", g);
 		y++;
 	}
 	return (cp);
@@ -185,7 +122,7 @@ static void	check_reachability(t_game *g, char **cp)
 	}
 	free(cp);
 	if (cf != g->collectibles || ef == 0)
-		error_exit("unsolvable map\n");
+		error_exit("unsolvable map\n", g);
 }
 
 /**********************************************************************
@@ -216,4 +153,3 @@ int	validate_path(t_game *g)
 	check_reachability(g, cp);
 	return (1);
 }
-

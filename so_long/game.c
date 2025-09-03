@@ -26,17 +26,10 @@
  **********************************************************************/
 int	close_game(t_game *g)
 {
-	int	y;
-
-	y = 0;
 	if (g->win)
 		mlx_destroy_window(g->mlx, g->win);
-	while (g->map && y < g->map_height)
-	{
-		free(g->map[y]);
-		y++;
-	}
-	free(g->map);
+	if (g->map)
+		free_map(g->map);
 	exit(0);
 }
 
@@ -63,11 +56,12 @@ int	close_game(t_game *g)
  **********************************************************************/
 int	start_game(t_game *g)
 {
-	g->win = mlx_new_window(g->mlx, g->map_width * RESOLUTION, g->map_height * RESOLUTION, "so_long");
+	g->win = mlx_new_window(g->mlx, g->map_width * RESOLUTION,
+			g->map_height * RESOLUTION, "so_long");
 	if (!g->win)
-		error_exit("mlx window\n");
+		error_exit("mlx window\n", g);
 	if (!load_textures(g))
-		error_exit("textures\n");
+		error_exit("textures\n", g);
 	render_map(g);
 	mlx_hook(g->win, 17, 0, close_game, g);
 	mlx_key_hook(g->win, handle_key, g);

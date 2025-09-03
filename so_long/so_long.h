@@ -71,11 +71,9 @@ typedef struct s_game
 }	t_game;
 
 // utils
-void	error_exit(char *msg);
-char	*sl_read_all(int fd);
-// void	free_map(char **map, int height);
+void	error_exit(char *msg, t_game *g);
+char	*sl_read_all(int fd, t_game *g);
 void	free_map(char **map);
-int	handle_resize(t_game *g);
 
 // map
 int		load_map(t_game *g, const char *path);

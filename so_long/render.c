@@ -20,57 +20,6 @@
 
 #include "so_long.h"
 
-// static void	load_img(t_game *g, t_img *slot, char *path)
-// {
-// 	slot->img = mlx_xpm_file_to_image(g->mlx, path, &slot->w, &slot->h);
-// 	if (!slot->img)
-// 		error_exit("texture load\n");
-// }
-
-// int	load_textures(t_game *g)
-// {
-// 	load_img(g, &g->floor, "textures/floor.xpm");
-// 	load_img(g, &g->wall, "textures/wall.xpm");
-// 	load_img(g, &g->player, "textures/player.xpm");
-// 	load_img(g, &g->exit_img, "textures/exit.xpm");
-// 	load_img(g, &g->collect, "textures/collect.xpm");
-// 	return (1);
-// }
-
-// static void	put_tile(t_game *g, int x, int y, char c)
-// {
-// 	void	*img;
-
-// 	img = g->floor.img;
-// 	if (c == '1')
-// 		img = g->wall.img;
-// 	if (c == 'P')
-// 		img = g->player.img;
-// 	if (c == 'E')
-// 		img = g->exit_img.img;
-// 	if (c == 'C')
-// 		img = g->collect.img;
-// 	mlx_put_image_to_window(g->mlx, g->win, img, x * RESOLUTION, y * RESOLUTION);
-// }
-
-// void	render_map(t_game *g)
-// {
-// 	int	x;
-// 	int	y;
-
-// 	y = 0;
-// 	while (y < g->map_height)
-// 	{
-// 		x = 0;
-// 		while (x < g->map_width)
-// 		{
-// 			put_tile(g, x, y, g->map[y][x]);
-// 			x++;
-// 		}
-// 		y++;
-// 	}
-// }
-
 /**********************************************************************
  * load_img: Loads a texture from an XPM file into a game image slot.
  * - g: Pointer to the game state structure.
@@ -87,7 +36,7 @@ static void	load_img(t_game *g, t_img *slot, char *path)
 {
 	slot->img = mlx_xpm_file_to_image(g->mlx, path, &slot->w, &slot->h);
 	if (!slot->img)
-		error_exit("texture load\n");
+		error_exit("texture load\n", g);
 }
 
 /**********************************************************************
@@ -140,7 +89,8 @@ static void	put_tile(t_game *g, int x, int y, char c)
 		img = g->exit_img.img;
 	if (c == 'C')
 		img = g->collect.img;
-	mlx_put_image_to_window(g->mlx, g->win, img, x * RESOLUTION, y * RESOLUTION);
+	mlx_put_image_to_window(g->mlx, g->win, img,
+		x * RESOLUTION, y * RESOLUTION);
 }
 
 /**********************************************************************

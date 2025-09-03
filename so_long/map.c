@@ -34,16 +34,16 @@ static void	check_shape_and_walls(t_game *g)
 	while (y < g->map_height)
 	{
 		if ((int)ft_strlen(g->map[y]) != w)
-			error_exit("map not rectangular\n");
+			error_exit("map not rectangular\n", g);
 		if (g->map[y][0] != '1' || g->map[y][w - 1] != '1')
-			error_exit("map not closed (sides)\n");
+			error_exit("map not closed (sides)\n", g);
 		y++;
 	}
 	y = 0;
 	while (y < w)
 	{
 		if (g->map[0][y] != '1' || g->map[g->map_height - 1][y] != '1')
-			error_exit("map not closed (top/bottom)\n");
+			error_exit("map not closed (top/bottom)\n", g);
 		y++;
 	}
 }
@@ -66,9 +66,9 @@ static void	check_shape_and_walls(t_game *g)
  **********************************************************************/
 static void	count_and_check_chars(t_game *g)
 {
-	int	x;
-	int	y;
-	char c;
+	int		x;
+	int		y;
+	char	c;
 
 	y = 0;
 	while (y < g->map_height)
@@ -77,8 +77,9 @@ static void	count_and_check_chars(t_game *g)
 		while (x < g->map_width)
 		{
 			c = g->map[y][x];
-			if (c != '0' && c != '1' && c != 'C' && c != 'E' && c != 'P')
-				error_exit("invalid char\n");
+			if (c != '0' && c != '1' && c != 'C'
+				&& c != 'E' && c != 'P')
+				error_exit("invalid char\n", g);
 			if (c == 'C')
 				g->collectibles++;
 			if (c == 'E')
@@ -93,7 +94,7 @@ static void	count_and_check_chars(t_game *g)
 		y++;
 	}
 	if (g->exit_cnt != 1 || g->collectibles < 1 || g->player_x < 0)
-		error_exit("map needs 1E 1P >=1C\n");
+		error_exit("map needs 1E 1P >=1C\n", g);
 }
 
 /**********************************************************************
@@ -115,55 +116,29 @@ static void	count_and_check_chars(t_game *g)
  * - path points to a valid file.
  * - sl_read_all() and ft_split() are implemented and handle memory.
  **********************************************************************/
-// int	load_map(t_game *g, const char *path)
-// {
-// 	int		fd;
-// 	char	*all;
-// 	char	**lines;
-// 	int		h;
-
-// 	fd = open(path, O_RDONLY);
-// 	if (fd < 0)
-// 		error_exit("open\n");
-// 	all = sl_read_all(fd);
-// 	close(fd);
-// 	lines = ft_split(all, '\n');
-// 	free(all);
-// 	if (!lines || !lines[0])
-// 		error_exit("empty map\n");
-// 	h = 0;
-// 	while (lines[h])
-// 		h++;
-// 	g->map = lines;
-// 	g->map_height = h;
-// 	g->map_width = (int)ft_strlen(lines[0]);
-// 	return (1);
-// }
-int load_map(t_game *g, const char *path)
+int	load_map(t_game *g, const char *path)
 {
-    int fd = open(path, O_RDONLY);
-    char *all;
-    char **lines;
-    int h = 0;
+	int		fd;
+	char	*all;
+	char	**lines;
+	int		h;
 
-    if (fd < 0)
-        error_exit("open\n");
-    all = sl_read_all(fd);
-    close(fd);
-
-    lines = ft_split(all, '\n');
-    free(all);
-
-    if (!lines || !lines[0])
-        error_exit("empty map\n");
-
-    while (lines[h])
-        h++;
-
-    g->map = lines;
-    g->map_height = h;
-    g->map_width = (int)ft_strlen(lines[0]);
-    return 1;
+	fd = open(path, O_RDONLY);
+	h = 0;
+	if (fd < 0)
+		error_exit("open\n", g);
+	all = sl_read_all(fd, g);
+	close(fd);
+	lines = ft_split(all, '\n');
+	free(all);
+	if (!lines || !lines[0])
+		error_exit("empty map\n", g);
+	while (lines[h])
+		h++;
+	g->map = lines;
+	g->map_height = h;
+	g->map_width = (int) ft_strlen(lines[0]);
+	return (1);
 }
 
 /**********************************************************************
