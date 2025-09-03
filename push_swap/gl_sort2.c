@@ -52,15 +52,27 @@ void	final_rotate_a(t_list **a)
  **********************************************************************/
 void	gl_sort2(t_list **a, t_list **b)
 {
-	if (ft_lstsize(*a) <= 3)
+	if (ft_lstsize(*a) == 1)
+		return ;
+	else if (ft_lstsize(*a) == 2)
+	{
+		ra(a, b);
+		return ;
+	}
+	else if (ft_lstsize(*a) == 3)
 	{
 		sort_three(a);
 		return ;
 	}
-	pb(a, b);
-	pb(a, b);
-	while (ft_lstsize(*a) > 3)
-		push_to_b_sorted(a, b);
+	else if (ft_lstsize(*a) == 4)
+		pb(a, b);
+	else
+	{
+		pb(a, b);
+		pb(a, b);
+		while (ft_lstsize(*a) > 3)
+			push_to_b_sorted(a, b);
+	}
 	sort_three(a);
 	push_back_to_a_sorted(a, b);
 	final_rotate_a(a);
